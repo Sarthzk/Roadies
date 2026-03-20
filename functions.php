@@ -522,4 +522,6 @@ function roadies_render_safety_badge() {
 	<?php
 }
 // Load Custom Backend Logic
-require_once get_stylesheet_directory() . '/inc/riding-taxonomy.php';
+
+require_once get_stylesheet_directory() . '/inc/riding-taxonomy.php'; // Custom taxonomy for riding styles
+require_once get_stylesheet_directory() . '/inc/ajax-cart.php';      // AJAX slide-out cart functionality
