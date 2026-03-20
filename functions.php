@@ -521,3 +521,5 @@ function roadies_render_safety_badge() {
 	</style>
 	<?php
 }
+// Load Custom Backend Logic
+require_once get_stylesheet_directory() . '/inc/riding-taxonomy.php';
