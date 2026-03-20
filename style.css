@@ -1,318 +1,73 @@
 /*
- * Theme Name:        Hello Elementor Child
- * Theme URI:         https://elementor.com/
- * Description:       A child theme for Hello Elementor — built for a WooCommerce riding gear store.
- * Author:            Your Name
- * Author URI:        https://yourwebsite.com
- * Template:          hello-elementor
- * Version:           1.0.0
- * Text Domain:       hello-elementor-child
- * License:           GNU General Public License v3 or later
- * License URI:       https://www.gnu.org/licenses/gpl-3.0.html
- */
+Theme Name: Hello Elementor Child
+Template: hello-elementor
+Version: 3.1.3
+*/
 
-/*
- * ---------------------------------------------------------------
- * Your custom CSS goes below this line.
- * Styles here will override the parent Hello Elementor theme.
- * ---------------------------------------------------------------
- */
-
- /* =================================================================
-   ROADIES — WooCommerce Button Styles
-   Aesthetic: Track Day / Racing — Carbon Black · Slate Grey · Neon Red
-   Add this block to the bottom of your hello-elementor-child/style.css
-   ================================================================= */
-
-/* --- CSS Variables (define once, use everywhere) --- */
 :root {
-  --roadies-carbon:       #0d0d0d;
-  --roadies-carbon-mid:   #1a1a1a;
-  --roadies-slate:        #2e2e2e;
-  --roadies-slate-light:  #4a4a4a;
-  --roadies-neon-red:     #e8001d;
-  --roadies-neon-red-glow:#ff1a35;
-  --roadies-chrome:       #c8c8c8;
-  --roadies-white:        #f0f0f0;
-
-  --btn-transition: 0.22s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --rd-teal: #76d6d5;
+  --rd-outline: #222828;
+  --rd-bg: #0c0e10;
+  --rd-panel-bg: #0e1113;
 }
 
-/* --- Base Button Reset & Core Style --- */
-.woocommerce a.button,
-.woocommerce button.button,
-.woocommerce input.button,
-.woocommerce #respond input#submit,
-.woocommerce .button.alt,
-.woocommerce a.button.alt,
-.woocommerce button.button.alt,
-.woocommerce input.button.alt {
-  /* Shape — sharp, race-inspired */
-  border-radius: 0;
-  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+/* THE CNC RULE: No rounding allowed */
+* { border-radius: 0px !important; box-sizing: border-box; }
 
-  /* Gradient — carbon fibre depth */
-  background: linear-gradient(
-    160deg,
-    var(--roadies-slate)      0%,
-    var(--roadies-carbon-mid) 40%,
-    var(--roadies-carbon)     100%
-  );
-
-  /* Border — tight slate rule, becomes neon on hover */
-  border: 1px solid var(--roadies-slate-light);
-  outline: none;
-
-  /* Typography */
-  color: var(--roadies-chrome);
-  font-family: 'Barlow Condensed', 'Impact', 'Arial Narrow', sans-serif;
-  font-size: 0.8rem;
-  font-weight: 700;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  text-shadow: none;
-
-  /* Spacing */
-  padding: 0.85em 2em;
-
-  /* Transitions */
-  transition:
-    border-color     var(--btn-transition),
-    box-shadow       var(--btn-transition),
-    color            var(--btn-transition),
-    background       var(--btn-transition),
-    transform        var(--btn-transition);
-
-  /* Remove WooCommerce default shadow */
-  box-shadow: none;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
+body {
+    background-color: var(--rd-bg) !important;
+    background-image: radial-gradient(#1e2424 1px, transparent 0);
+    background-size: 45px 45px;
+    margin: 0;
+    overflow-x: hidden;
+    font-family: 'Inter', sans-serif;
+    color: #ffffff;
 }
 
-/* Subtle inner highlight line at top — simulates panel reflection */
-.woocommerce a.button::before,
-.woocommerce button.button::before,
-.woocommerce input.button::before,
-.woocommerce #respond input#submit::before,
-.woocommerce .button.alt::before {
-  content: '';
-  display: block;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 1px;
-  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.12) 50%, transparent 100%);
-  pointer-events: none;
+/* THE CHASSIS */
+.rd-chassis-max {
+    max-width: 1600px;
+    margin: 0 auto;
+    width: 100%;
 }
 
-/* --- Hover State — Neon Red Glow --- */
-.woocommerce a.button:hover,
-.woocommerce button.button:hover,
-.woocommerce input.button:hover,
-.woocommerce #respond input#submit:hover,
-.woocommerce .button.alt:hover,
-.woocommerce a.button.alt:hover,
-.woocommerce button.button.alt:hover,
-.woocommerce input.button.alt:hover {
-  background: linear-gradient(
-    160deg,
-    #2a0008                   0%,
-    var(--roadies-carbon-mid) 50%,
-    var(--roadies-carbon)     100%
-  );
-  border-color: var(--roadies-neon-red);
-  color: var(--roadies-white);
-
-  /* Layered glow: tight border glow + wide ambient bloom */
-  box-shadow:
-    0 0  6px  1px var(--roadies-neon-red),
-    0 0 18px  4px rgba(232, 0, 29, 0.45),
-    0 0 40px 10px rgba(232, 0, 29, 0.15),
-    inset 0 0 12px rgba(232, 0, 29, 0.08);
-
-  transform: translateY(-1px);
+.rd-panel {
+    background-color: var(--rd-panel-bg) !important; 
+    border: 1px solid var(--rd-outline);
+    position: relative;
 }
 
-/* --- Focus State — accessibility + racing feel --- */
-.woocommerce a.button:focus,
-.woocommerce button.button:focus,
-.woocommerce input.button:focus,
-.woocommerce #respond input#submit:focus,
-.woocommerce .button.alt:focus {
-  border-color: var(--roadies-neon-red-glow);
-  box-shadow:
-    0 0 0 2px var(--roadies-carbon),
-    0 0 0 4px var(--roadies-neon-red);
-  outline: none;
+/* FLUID TYPOGRAPHY FIX: No Overlap, No Underscore */
+.rd-hero-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 900;
+    /* Reduced scale with tight tracking to ensure fit */
+    font-size: clamp(4rem, 9vw, 8.5rem) !important; 
+    line-height: 0.85;
+    letter-spacing: -0.04em; 
+    text-transform: uppercase;
+    color: #ffffff;
+    margin-bottom: 2.5rem;
 }
 
-/* --- Active / Pressed State --- */
-.woocommerce a.button:active,
-.woocommerce button.button:active,
-.woocommerce input.button:active,
-.woocommerce #respond input#submit:active,
-.woocommerce .button.alt:active {
-  transform: translateY(1px);
-  box-shadow:
-    0 0  4px  1px var(--roadies-neon-red),
-    0 0 12px  3px rgba(232, 0, 29, 0.4),
-    inset 0 1px 3px rgba(0, 0, 0, 0.5);
+.text-teal { color: var(--rd-teal) !important; }
+
+/* MECHANICAL BUTTON */
+.rd-btn {
+    background: var(--rd-teal);
+    color: #000;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    padding: 20px 50px;
+    border: none;
+    cursor: pointer;
+    transition: 100ms cubic-bezier(0.4, 0, 0.2, 1);
+    display: inline-block;
+    text-decoration: none;
 }
-
-/* --- Disabled State --- */
-.woocommerce a.button.disabled,
-.woocommerce button.button:disabled,
-.woocommerce a.button:disabled {
-  background: linear-gradient(160deg, #222 0%, #111 100%);
-  border-color: #333;
-  color: #555;
-  cursor: not-allowed;
-  box-shadow: none;
-  transform: none;
-  opacity: 0.6;
-}
-
-/* --- "Add to Cart" / Primary CTA (alt class) gets a bolder treatment --- */
-.woocommerce .single_add_to_cart_button,
-.woocommerce .wc-block-components-checkout-place-order-button {
-  width: 100%;
-  padding: 1em 2em;
-  font-size: 0.9rem;
-  letter-spacing: 0.22em;
-  border-color: var(--roadies-slate-light);
-}
-
-/* Checkout / Proceed to Cart — keep consistent */
-.woocommerce a.checkout-button,
-.woocommerce .checkout-button {
-  display: block;
-  text-align: center;
-}
-
-/* GLOBAL THEME SETTINGS */
-body, #page, .site-header, .site-footer {
-    background-color: #0a0a0a !important;
-    color: #ffffff !important;
-}
-
-/* Racing Red Accents */
-:root {
-    --racing-red: #ff0000;
-    --carbon-grey: #1a1a1a;
-}
-
-a { color: var(--racing-red); }
-
-/* ================================================================
-   ROADIES — CUSTOM TWO-TONE LOGO STYLING
-   'ROAD' in White · 'IES' in Neon Red
-   ================================================================ */
-
-.roadies-logo {
-  display: inline-flex;
-  align-items: baseline;
-  gap: 0;
-  font-family: 'Barlow Condensed', 'Impact', 'Arial Narrow', sans-serif;
-  font-size: 2.2rem;
-  font-weight: 900;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  text-decoration: none;
-}
-
-.roadies-logo__road {
-  color: #f0f0f0;
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
-}
-
-.roadies-logo__ies {
-  color: var(--roadies-neon-red);
-  text-shadow: 0 0 12px rgba(232, 0, 29, 0.6);
-}
-
-.site-title a[data-roadies-custom-logo="true"] {
-  text-decoration: none;
-  display: inline-block;
-}
-
-
-/* ================================================================
-   ROADIES — STICKY HEADER WITH TRANSPARENT-TO-SOLID TRANSITION
-   ================================================================ */
-
-.site-header {
-  position: sticky;
-  top: 0;
-  z-index: 999;
-  background: rgba(10, 10, 10, 0);
-  border-bottom: 1px solid rgba(46, 46, 46, 0);
-  transition: 
-    background-color 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-    border-color 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-    box-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  backdrop-filter: blur(0px);
-}
-
-/* Apply solid black background when scrolled */
-.site-header.scrolled {
-  background-color: rgba(10, 10, 10, 0.98);
-  border-bottom-color: rgba(46, 46, 46, 0.8);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(8px);
-}
-
-
-/* ================================================================
-   ROADIES — MENU ITEMS WITH LEFT-TO-RIGHT RED UNDERLINE HOVER
-   ================================================================ */
-
-/* Base menu item styles */
-.site-navigation a,
-nav a,
-.main-navigation a,
-.menu a,
-.elementor-nav-menu a {
-  position: relative;
-  color: #f0f0f0;
-  text-decoration: none;
-  transition: color 0.3s ease;
-  display: inline-block;
-}
-
-/* Create the animated underline pseudo-element */
-.site-navigation a::after,
-nav a::after,
-.main-navigation a::after,
-.menu a::after,
-.elementor-nav-menu a::after {
-  content: '';
-  position: absolute;
-  bottom: -4px;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background: linear-gradient(90deg, var(--roadies-neon-red) 0%, rgba(232, 0, 29, 0.6) 100%);
-  transition: width 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-  box-shadow: 0 0 6px rgba(232, 0, 29, 0.4);
-}
-
-/* Animate the underline on hover (left to right) */
-.site-navigation a:hover::after,
-nav a:hover::after,
-.main-navigation a:hover::after,
-.menu a:hover::after,
-.elementor-nav-menu a:hover::after {
-  width: 100%;
-  box-shadow: 0 0 8px rgba(232, 0, 29, 0.6);
-}
-
-/* Text color on hover */
-.site-navigation a:hover,
-nav a:hover,
-.main-navigation a:hover,
-.menu a:hover,
-.elementor-nav-menu a:hover {
-  color: #ffffff;
+.rd-btn:hover { 
+    background: #ffffff; 
+    box-shadow: 0 0 20px rgba(118, 214, 213, 0.5); 
 }
