@@ -83,10 +83,11 @@ function rd_custom_btn_text( $text, $product ) {
     return __( 'EQUIP GEAR', 'hello-elementor-child' );
 }
 
-// Change Checkout Button Text
+
+// Change Checkout Button Text (Force Priority 99)
 add_filter( 'woocommerce_order_button_text', function() {
     return __( 'CONFIRM GEAR — DEPART', 'hello-elementor-child' );
-});
+}, 99);
 
 /* ---------------------------------------------------------------
  * 3. SVG & MEDIA SUPPORT
