@@ -6,7 +6,7 @@ get_header(); ?>
 
 <div class="rd-chassis-max py-20 px-6">
     <header class="mb-12 border-b border-[#222828] pb-8">
-        <h1 class="rd-hero-title text-5xl">Your <span class="text-teal">Garage</span></h1>
+        <h1 class="rd-hero-title text-5xl">Your <span class="text-teal">Cart</span></h1>
         <p class="text-gray-500 uppercase tracking-widest text-xs mt-2">The Rider's HUB / Secure Checkout</p>
     </header>
 

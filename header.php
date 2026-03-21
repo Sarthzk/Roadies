@@ -27,11 +27,12 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
 
         <nav class="roadies-main-nav">
             <ul style="list-style: none; display: flex; gap: 40px; margin: 0; padding: 0;">
+                <li><a href="<?php echo esc_url( home_url( '/' ) ); ?>" style="color: #888; text-decoration: none; text-transform: uppercase; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 0.8rem; letter-spacing: 2px; transition: color 0.3s;" onmouseover="this.style.color='#76d6d5'" onmouseout="this.style.color='#888'">HOME</a></li>
                 <li><a href="<?php echo esc_url( home_url( '/product-category/helmets/' ) ); ?>" style="color: #888; text-decoration: none; text-transform: uppercase; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 0.8rem; letter-spacing: 2px;">HELMETS</a></li>
                 <li><a href="<?php echo esc_url( home_url( '/product-category/boots/' ) ); ?>" style="color: #888; text-decoration: none; text-transform: uppercase; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 0.8rem; letter-spacing: 2px;">BOOTS</a></li>
                 <li><a href="<?php echo esc_url( home_url( '/product-category/jackets/' ) ); ?>" style="color: #888; text-decoration: none; text-transform: uppercase; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 0.8rem; letter-spacing: 2px;">JACKETS</a></li>
             </ul>
-        </nav>
+</nav>
 
         <div class="roadies-cart-trigger">
             <a href="#" id="roadies-cart-toggle" style="background: #76d6d5; color: #000; font-family: 'Space Grotesk', sans-serif; font-weight: 800; text-transform: uppercase; padding: 12px 25px; text-decoration: none; font-size: 0.75rem; display: flex; align-items: center; gap: 10px;">

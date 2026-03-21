@@ -44,7 +44,8 @@ $current_cat = get_queried_object();
                         <div class="mt-auto p-6 pt-0">
                             <a href="?add-to-cart=<?php echo get_the_ID(); ?>" 
                                class="rd-btn w-full text-center text-xs py-4 no-underline flex items-center justify-center gap-2 ajax_add_to_cart add_to_cart_button"
-                               data-product_id="<?php echo get_the_ID(); ?>">
+                               data-product_id="<?php echo get_the_ID(); ?>"
+                               data-quantity="1">
                                 EQUIP GEAR
                             </a>
                         </div>

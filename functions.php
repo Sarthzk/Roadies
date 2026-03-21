@@ -19,6 +19,7 @@ add_action( 'wp_enqueue_scripts', function() {
     // Kinetic Framework Fonts & Tailwind
     wp_enqueue_style( 'rd-fonts', 'https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..900&family=Inter:wght@400..700&display=swap', false );
     wp_enqueue_script( 'rd-tailwind', 'https://cdn.tailwindcss.com', array(), null, false );
+	wp_enqueue_style( 'rd-fonts', 'https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@800&family=Space+Grotesk:wght@300..900&family=Inter:wght@400..700&family=IBM+Plex+Sans:wght@400;700&display=swap', false );
 
     // Child Theme Styles
     wp_enqueue_style( 'hello-elementor-child-style', get_stylesheet_uri(), ['parent-style'], '3.1.0' );
@@ -32,12 +33,42 @@ add_action( 'wp_enqueue_scripts', function() {
 // Force the baseline Dark Mode colors sitewide
 add_action( 'wp_head', function() {
     echo '<style>
-        html, body { background: #0c0e10 !important; color: #ffffff !important; margin: 0 !important; padding: 0 !important; overflow-x: hidden; }
+        /* 1. GLOBAL RESET & BASE COLORS */
+        html, body { 
+            background: #0c0e10 !important; 
+            color: #ffffff !important; 
+            margin: 0 !important; 
+            padding: 0 !important; 
+            overflow-x: hidden; 
+        }
+        
         .entry-title, .page-header, .archive-title { display: none !important; }
         #content { padding: 0 !important; margin: 0 !important; }
+        
+        /* 2. LAYOUT & ACCENTS */
         .rd-chassis-max { max-width: 1400px; margin: 0 auto; width: 100%; }
         .text-teal { color: #76d6d5 !important; }
         .bg-teal { background-color: #76d6d5 !important; }
+
+        /* 3. IBM PLEX SANS FOR NUMERICAL DATA (Prices & Quantities) */
+        .amount, 
+        .price, 
+        .quantity, 
+        .total .amount, 
+        .roadies-safety-badge__score,
+        .cart-contents-count { 
+            font-family: "IBM Plex Sans", sans-serif !important; 
+            font-weight: 700 !important; 
+            font-variant-numeric: tabular-nums !important; /* Forces numbers to align in columns */
+            letter-spacing: -0.02em !important;
+        }
+
+        /* 4. WOOCOMMERCE UI CLEANUP */
+        .woocommerce-Price-currencySymbol {
+            margin-right: 4px;
+            font-weight: 400; /* Slightly thinner symbol makes the numbers pop */
+            color: #76d6d5;
+        }
     </style>';
 });
 
