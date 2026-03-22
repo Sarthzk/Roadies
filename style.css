@@ -1,7 +1,7 @@
 /*
 Theme Name: Hello Elementor Child
 Template: hello-elementor
-Version: 3.1.5
+Version: 3.1.7
 */
 
 :root {
@@ -9,6 +9,7 @@ Version: 3.1.5
   --rd-outline: #222828;
   --rd-bg: #0c0e10;
   --rd-panel-bg: #0e1113;
+  --rd-panel-bright: #121416;
 }
 
 /* THE CNC RULE: No rounding allowed */
@@ -38,9 +39,101 @@ body {
     background-color: var(--rd-panel-bg) !important; 
     border: 1px solid var(--rd-outline);
     position: relative;
+    overflow: hidden;
 }
 
-/* FLUID TYPOGRAPHY FIX: No Overlap, No Underscore */
+/* ==========================================================================
+   KINETIC HUD EFFECTS (Targeting Brackets & Scan)
+   ========================================================================== */
+
+/* The Diagnostic Scan Line */
+.rd-panel::after {
+    content: '';
+    position: absolute;
+    top: -100%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, transparent, rgba(118, 214, 213, 0.05), transparent);
+    transition: none;
+    pointer-events: none;
+}
+
+.rd-panel:hover::after {
+    top: 100%;
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Targeting Brackets (Top Left & Bottom Right) */
+.rd-panel::before {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 20px;
+    height: 20px;
+    border-top: 2px solid var(--rd-teal);
+    border-left: 2px solid var(--rd-teal);
+    opacity: 0;
+    transition: 0.3s ease;
+    z-index: 10;
+}
+
+.rd-panel:hover::before {
+    opacity: 1;
+    top: 0;
+    left: 0;
+}
+
+/* ==========================================================================
+   TECHNICAL GLITCH ENGINE
+   ========================================================================== */
+.rd-glitch {
+    position: relative;
+    display: inline-block;
+}
+
+.rd-glitch::before,
+.rd-glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--rd-bg);
+}
+
+.rd-glitch::before {
+    left: 2px;
+    text-shadow: -2px 0 var(--rd-teal);
+    clip: rect(44px, 450px, 56px, 0);
+    animation: rd-glitch-anim 5s infinite linear alternate-reverse;
+}
+
+.rd-glitch::after {
+    left: -2px;
+    text-shadow: -2px 0 #fff;
+    clip: rect(100px, 450px, 120px, 0);
+    animation: rd-glitch-anim-2 1s infinite linear alternate-reverse;
+}
+
+@keyframes rd-glitch-anim {
+    0% { clip: rect(31px, 9999px, 94px, 0); }
+    20% { clip: rect(62px, 9999px, 42px, 0); }
+    40% { clip: rect(13px, 9999px, 61px, 0); }
+    60% { clip: rect(85px, 9999px, 20px, 0); }
+    80% { clip: rect(44px, 9999px, 95px, 0); }
+    100% { clip: rect(13px, 9999px, 61px, 0); }
+}
+
+@keyframes rd-glitch-anim-2 {
+    0% { clip: rect(65px, 9999px, 100px, 0); }
+    50% { clip: rect(10px, 9999px, 30px, 0); }
+    100% { clip: rect(80px, 9999px, 10px, 0); }
+}
+
+/* TYPOGRAPHY */
 .rd-hero-title {
     font-family: 'Space Grotesk', sans-serif;
     font-weight: 900;
@@ -70,14 +163,13 @@ body {
     text-decoration: none;
     text-align: center;
 }
+
 .rd-btn:hover { 
     background: #ffffff; 
     box-shadow: 0 0 20px rgba(118, 214, 213, 0.5); 
 }
 
-/* ==========================================================================
-   TECHNICAL SPEC BOX (The Armory Details)
-   ========================================================================== */
+/* TECHNICAL SPEC BOX */
 .rd-spec-box {
     border-left: 2px solid var(--rd-teal);
     padding: 15px 20px;
@@ -96,16 +188,41 @@ body {
 }
 
 /* HIDE PRODUCT META (SKU, CATEGORIES, TAGS) */
-/* This removes the cluttered text block below the 'Equip Gear' button */
 .product_meta {
     display: none !important;
 }
 
 /* ==========================================================================
+   ARMORY CART & CHECKOUT STYLING
+   ========================================================================== */
+.woocommerce-cart-form__contents {
+    background: var(--rd-panel-bg) !important;
+    border: 1px solid var(--rd-outline) !important;
+}
+
+.shop_table thead th {
+    background: var(--rd-panel-bright) !important;
+    color: var(--rd-teal) !important;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 1px solid var(--rd-outline) !important;
+}
+
+.cart_item td {
+    border-bottom: 1px solid var(--rd-outline) !important;
+    padding: 25px !important;
+    background: transparent !important;
+}
+
+.cart-collaterals .cart_totals {
+    background: var(--rd-panel-bg) !important;
+    border: 1px solid var(--rd-outline) !important;
+    padding: 30px !important;
+}
+
+/* ==========================================================================
    WISHLIST ENGINE (TI WOOCOMMERCE WISHLIST)
    ========================================================================== */
-
-/* 1. Add to Wishlist Button Styling (Product Page) */
 .tinv-wraper.tinv-wishlist {
     margin: 10px 0 !important;
     display: block !important;
@@ -134,7 +251,6 @@ body {
     border-color: var(--rd-teal) !important;
 }
 
-/* 2. Shortlist Overlay (Home Page Grid) */
 .rd-panel .tinvwl_add_to_wishlist_button.tinvwl-icon-heart {
     background: #0c0e10 !important;
     border: 1px solid var(--rd-outline) !important;
@@ -142,7 +258,7 @@ body {
     width: 45px !important;
     height: 45px !important;
     padding: 0 !important;
-    font-size: 0 !important; /* Hide "Add to Wishlist" text in grid */
+    font-size: 0 !important;
 }
 
 .rd-panel .tinvwl_add_to_wishlist_button.tinvwl-icon-heart::before {
@@ -150,7 +266,6 @@ body {
     margin: 0 !important;
 }
 
-/* 3. Wishlist Table Styling */
 .tinv-wishlist .tinvwl-table-manage-list {
     background: var(--rd-panel-bg) !important;
     border: 1px solid var(--rd-outline) !important;
@@ -175,7 +290,6 @@ body {
     vertical-align: middle;
 }
 
-/* 4. Wishlist Action Buttons (Add to Cart) */
 .tinv-wishlist .button.alt {
     background: var(--rd-teal) !important;
     color: #000 !important;
@@ -186,11 +300,6 @@ body {
     border: none !important;
 }
 
-.tinv-wishlist .button.alt:hover {
-    background: #ffffff !important;
-}
-
-/* 5. Remove default heart icon background circles */
 .tinvwl_add_to_wishlist_button::before {
     color: var(--rd-teal) !important;
     margin-right: 8px !important;
