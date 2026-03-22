@@ -351,3 +351,800 @@ body {
 .woocommerce-MyAccount-content > p:first-of-type {
     display: none !important;
 }
+
+
+/* =========================================================
+   ROADIES ARMORY - SINGLE PRODUCT UI OVERRIDE
+   ========================================================= */
+
+/* 1. The Main Split-Screen Grid */
+.woocommerce div.product {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: start;
+    max-width: 1400px;
+    margin: 60px auto;
+    padding: 0 40px;
+}
+
+/* 2. Left Column: The Tech Viewer (Images) */
+.woocommerce div.product div.images {
+    width: 100% !important;
+    float: none !important;
+    background-color: #121416;
+    border: 1px solid #222828;
+    padding: 40px;
+    border-radius: 0;
+}
+
+.woocommerce div.product div.images img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Thumbnail Gallery Cleanup */
+.woocommerce div.product div.images .flex-control-thumbs {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+    padding: 0;
+}
+.woocommerce div.product div.images .flex-control-thumbs li {
+    width: calc(25% - 7.5px) !important;
+    border: 1px solid #222828;
+    background: #0c0e10;
+    list-style: none;
+}
+.woocommerce div.product div.images .flex-control-thumbs li img {
+    opacity: 0.5;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+.woocommerce div.product div.images .flex-control-thumbs li img.flex-active,
+.woocommerce div.product div.images .flex-control-thumbs li img:hover {
+    opacity: 1;
+    border-color: #76d6d5;
+}
+
+/* 3. Right Column: Telemetry & Specs (Summary) */
+.woocommerce div.product div.summary {
+    width: 100% !important;
+    float: none !important;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Product Title */
+.woocommerce div.product .product_title {
+    font-family: 'Space Grotesk', sans-serif !important;
+    font-size: 42px !important;
+    font-weight: 900 !important;
+    color: #fff !important;
+    text-transform: uppercase;
+    line-height: 1.1;
+    letter-spacing: -1px;
+    margin-top: 0;
+    margin-bottom: 20px !important;
+}
+
+/* Price Display */
+.woocommerce div.product p.price,
+.woocommerce div.product span.price {
+    font-family: 'IBM Plex Sans', sans-serif !important;
+    font-size: 32px !important;
+    font-weight: 900 !important;
+    color: #76d6d5 !important;
+    margin-bottom: 30px !important;
+    padding-bottom: 30px;
+    border-bottom: 1px solid #222828;
+}
+
+/* Description Text */
+.woocommerce div.product .woocommerce-product-details__short-description {
+    font-family: 'Inter', sans-serif;
+    color: #888;
+    font-size: 14px;
+    line-height: 1.8;
+    margin-bottom: 40px;
+}
+
+/* 4. The Action Area (Quantity, Dropdowns & Equip Button) */
+.woocommerce div.product form.cart {
+    display: block !important; /* Reset to block so tables don't break */
+    margin-top: 20px;
+    padding-top: 30px;
+    border-top: 1px solid var(--rd-outline);
+}
+
+/* Flexbox layout ONLY for simple products */
+.woocommerce div.product form.cart:not(.variations_form) {
+    display: flex !important;
+    gap: 15px;
+    align-items: center;
+}
+
+/* =========================================================
+   VARIABLE PRODUCT STYLING (Dropdowns)
+   ========================================================= */
+.woocommerce div.product form.cart table.variations {
+    width: 100%;
+    margin-bottom: 25px;
+    border: none !important;
+}
+
+.woocommerce div.product form.cart table.variations td {
+    padding: 10px 0;
+    vertical-align: middle;
+    background: transparent !important;
+    border: none !important;
+}
+
+.woocommerce div.product form.cart table.variations td.label {
+    width: 80px;
+    color: #888;
+    font-family: 'Space Grotesk', sans-serif;
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: 2px;
+}
+
+/* Dark Mode Dropdown Select */
+.woocommerce div.product form.cart table.variations select {
+    width: 100%;
+    background-color: var(--rd-panel-bright) !important;
+    border: 1px solid var(--rd-outline) !important;
+    color: #fff !important;
+    padding: 15px !important;
+    font-family: 'Inter', sans-serif !important;
+    border-radius: 0 !important;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.woocommerce div.product form.cart table.variations select:focus {
+    border-color: var(--rd-teal) !important;
+    outline: none !important;
+    box-shadow: 0 0 10px rgba(118, 214, 213, 0.1);
+}
+
+/* Flexbox layout for the bottom row of variable products */
+.woocommerce div.product form.cart .woocommerce-variation-add-to-cart {
+    display: flex !important;
+    gap: 15px;
+    align-items: center;
+    width: 100%;
+}
+
+/* Clear the weird price text woo injects above the button */
+.woocommerce-variation.single_variation {
+    margin-bottom: 20px;
+    font-family: 'Inter', sans-serif;
+    color: var(--rd-teal);
+}
+
+/* Dark Mode Quantity Box */
+.woocommerce div.product form.cart div.quantity {
+    float: none !important;
+    margin: 0 !important;
+}
+
+.woocommerce div.product form.cart div.quantity input.qty {
+    width: 80px !important;
+    height: 60px !important;
+    background-color: #121416 !important;
+    border: 1px solid #222828 !important;
+    color: #fff !important;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    border-radius: 0 !important;
+    padding: 0;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.woocommerce div.product form.cart div.quantity input.qty:focus {
+    border-color: #76d6d5 !important;
+    outline: none !important;
+    box-shadow: 0 0 10px rgba(118, 214, 213, 0.1);
+}
+
+/* Equip Gear Button Override (Kill the Purple!) */
+.woocommerce div.product form.cart .button {
+    flex-grow: 1;
+    height: 60px;
+    background-color: #76d6d5 !important;
+    color: #000 !important;
+    font-family: 'Space Grotesk', sans-serif !important;
+    font-weight: 900 !important;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    border-radius: 0 !important;
+    transition: all 0.3s ease !important;
+    border: none !important;
+    padding: 0 30px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.woocommerce div.product form.cart .button:hover {
+    background-color: #fff !important;
+    box-shadow: 0 0 20px rgba(118, 214, 213, 0.4) !important;
+}
+
+/* Clean up meta data (SKU, Categories) */
+.woocommerce div.product .product_meta {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #222828;
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #555;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.woocommerce div.product .product_meta a {
+    color: #76d6d5;
+    text-decoration: none;
+}
+.woocommerce div.product .product_meta a:hover {
+    color: #fff;
+}
+
+/* Responsive Stacking for Mobile */
+@media (max-width: 992px) {
+    .woocommerce div.product {
+        grid-template-columns: 1fr !important;
+        gap: 40px;
+        padding: 0 20px;
+    }
+}
+
+/* =========================================================
+   FIX: BOTTOM TABS & RELATED PRODUCTS WRAPPING
+   ========================================================= */
+
+/* Force tabs and related products to span ALL columns at the bottom */
+.woocommerce div.product div.woocommerce-tabs,
+.woocommerce div.product section.related.products,
+.woocommerce div.product section.upsells.products {
+    grid-column: 1 / -1 !important;
+    width: 100% !important;
+    margin-top: 80px !important;
+    clear: both !important;
+    border-top: 1px solid var(--rd-outline);
+    padding-top: 60px;
+}
+
+/* =========================================================
+   ARMORY TAB STYLING (Description, Specs, Reviews)
+   ========================================================= */
+
+.woocommerce div.product .woocommerce-tabs ul.tabs {
+    border-bottom: 1px solid var(--rd-outline) !important;
+    margin: 0 0 30px !important;
+    padding: 0 !important;
+    display: flex;
+    gap: 10px;
+}
+
+.woocommerce div.product .woocommerce-tabs ul.tabs li {
+    background: var(--rd-bg) !important;
+    border: 1px solid var(--rd-outline) !important;
+    border-bottom: none !important;
+    border-radius: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.woocommerce div.product .woocommerce-tabs ul.tabs li.active {
+    background: var(--rd-panel-bg) !important;
+    border-top: 3px solid var(--rd-teal) !important;
+}
+
+.woocommerce div.product .woocommerce-tabs ul.tabs li a {
+    color: #666 !important;
+    font-family: 'Space Grotesk', sans-serif !important;
+    text-transform: uppercase;
+    font-weight: 800;
+    letter-spacing: 2px;
+    padding: 15px 30px !important;
+    display: block;
+    text-decoration: none;
+}
+
+.woocommerce div.product .woocommerce-tabs ul.tabs li.active a,
+.woocommerce div.product .woocommerce-tabs ul.tabs li a:hover {
+    color: var(--rd-teal) !important;
+}
+
+/* Tab Content Box */
+.woocommerce div.product .woocommerce-tabs .panel {
+    background: var(--rd-panel-bg);
+    border: 1px solid var(--rd-outline);
+    padding: 40px;
+    color: #aaa;
+    font-family: 'Inter', sans-serif;
+    line-height: 1.8;
+}
+
+.woocommerce div.product .woocommerce-tabs .panel h2 {
+    font-family: 'Space Grotesk', sans-serif;
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 24px;
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+/* Ensure WooCommerce spec tables match dark mode */
+.woocommerce div.product .woocommerce-tabs table.shop_attributes {
+    border: 1px solid var(--rd-outline);
+}
+.woocommerce div.product .woocommerce-tabs table.shop_attributes th,
+.woocommerce div.product .woocommerce-tabs table.shop_attributes td {
+    border-bottom: 1px solid var(--rd-outline);
+    padding: 15px;
+    color: #ccc;
+    background: transparent;
+    font-style: normal;
+}
+.woocommerce div.product .woocommerce-tabs table.shop_attributes th {
+    background: var(--rd-panel-bright);
+    color: #fff;
+    font-family: 'Space Grotesk', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* =========================================================
+   RELATED PRODUCTS GRID FIX
+   ========================================================= */
+
+.woocommerce div.product section.related.products h2 {
+    font-family: 'Space Grotesk', sans-serif !important;
+    color: #fff !important;
+    text-transform: uppercase;
+    font-size: 32px !important;
+    letter-spacing: -1px;
+    margin-bottom: 40px !important;
+}
+
+/* Force Related Products into a rigid grid */
+.woocommerce div.product section.related.products ul.products {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)) !important;
+    gap: 30px !important;
+}
+
+.woocommerce div.product section.related.products ul.products li.product {
+    width: 100% !important;
+    margin: 0 !important;
+    background: var(--rd-panel-bg);
+    border: 1px solid var(--rd-outline);
+    padding: 20px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.woocommerce div.product section.related.products ul.products li.product:hover {
+    border-color: var(--rd-teal);
+    transform: translateY(-5px);
+}
+
+/* Style the text inside related products */
+.woocommerce div.product section.related.products li.product h2 {
+    font-size: 14px !important;
+    color: #fff !important;
+    border: none !important;
+    margin: 20px 0 10px !important;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.woocommerce div.product section.related.products li.product .price {
+    font-size: 18px !important;
+    color: var(--rd-teal) !important;
+    border: none !important;
+    padding: 0 !important;
+    margin-bottom: 20px !important;
+}
+
+/* Clean up the related product Add to Cart button */
+.woocommerce div.product section.related.products li.product .button {
+    background: transparent !important;
+    color: var(--rd-teal) !important;
+    border: 1px solid var(--rd-teal) !important;
+    padding: 15px 20px !important;
+    font-family: 'Space Grotesk', sans-serif !important;
+    font-size: 10px !important;
+    letter-spacing: 2px !important;
+    display: block;
+    width: 100%;
+}
+
+.woocommerce div.product section.related.products li.product .button:hover {
+    background: var(--rd-teal) !important;
+    color: #000 !important;
+}
+
+/* =========================================================
+   REVIEWS & FORMS UI BLACKOUT
+   ========================================================= */
+#review_form_wrapper .comment-form-comment textarea,
+#review_form_wrapper .comment-form-author input,
+#review_form_wrapper .comment-form-email input {
+    background-color: var(--rd-panel-bright) !important;
+    border: 1px solid var(--rd-outline) !important;
+    color: #fff !important;
+    padding: 15px !important;
+    font-family: 'Inter', sans-serif !important;
+    width: 100%;
+    border-radius: 0 !important;
+    transition: all 0.3s ease;
+}
+
+#review_form_wrapper .comment-form-comment textarea:focus,
+#review_form_wrapper .comment-form-author input:focus,
+#review_form_wrapper .comment-form-email input:focus {
+    border-color: var(--rd-teal) !important;
+    outline: none !important;
+    box-shadow: 0 0 10px rgba(118, 214, 213, 0.1);
+}
+
+#review_form_wrapper .form-submit .submit {
+    background: var(--rd-teal) !important;
+    color: #000 !important;
+    border: none !important;
+    padding: 15px 30px !important;
+    font-family: 'Space Grotesk', sans-serif !important;
+    text-transform: uppercase;
+    font-weight: 800;
+    letter-spacing: 2px;
+    border-radius: 0 !important;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+}
+
+#review_form_wrapper .form-submit .submit:hover {
+    background: #fff !important;
+    box-shadow: 0 0 15px rgba(118, 214, 213, 0.4) !important;
+}
+
+/* =========================================================
+   SYSTEM NOTIFICATIONS (ALERTS & MESSAGES)
+   ========================================================= */
+.woocommerce-message, 
+.woocommerce-error, 
+.woocommerce-info {
+    background-color: var(--rd-panel-bg) !important;
+    color: #fff !important;
+    border-top: 2px solid var(--rd-teal) !important; /* Cyan accent line */
+    border-left: 1px solid var(--rd-outline) !important;
+    border-right: 1px solid var(--rd-outline) !important;
+    border-bottom: 1px solid var(--rd-outline) !important;
+    font-family: 'Inter', sans-serif !important;
+    padding: 20px 30px !important;
+    border-radius: 0 !important;
+    display: flex !important;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 30px !important;
+}
+
+.woocommerce-error {
+    border-top-color: #ff4d4d !important; /* Red for errors */
+}
+
+/* Hide default woo icons */
+.woocommerce-message::before, 
+.woocommerce-error::before, 
+.woocommerce-info::before {
+    display: none !important; 
+}
+
+/* The "View Cart" button inside the alert */
+.woocommerce-message .button, 
+.woocommerce-error .button, 
+.woocommerce-info .button {
+    background: transparent !important;
+    border: 1px solid var(--rd-teal) !important;
+    color: var(--rd-teal) !important;
+    padding: 10px 20px !important;
+    font-family: 'Space Grotesk', sans-serif !important;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 11px !important;
+    letter-spacing: 1px;
+    border-radius: 0 !important;
+    margin-left: 20px;
+}
+
+.woocommerce-message .button:hover {
+    background: var(--rd-teal) !important;
+    color: #000 !important;
+}
+
+/* =========================================================
+   CUSTOM QUANTITY +/- UI & VARIATION CLEANUP
+   ========================================================= */
+
+/* 1. Clean up the Variation Table (Size Label) & Alignment */
+.woocommerce div.product form.cart table.variations {
+    display: block !important;
+    border: none !important;
+    margin-bottom: 25px !important;
+}
+
+.woocommerce div.product form.cart table.variations tbody {
+    display: block !important;
+}
+
+/* Force the row into a perfectly centered flex line */
+.woocommerce div.product form.cart table.variations tr {
+    display: flex !important;
+    align-items: center !important; /* Centers Size perfectly with Dropdown */
+    justify-content: flex-start !important;
+    gap: 20px !important; /* Exactly 20px space between Size and the box */
+    background: transparent !important; /* Kills the dark grey row box */
+    border: none !important;
+    padding: 0 !important;
+}
+
+/* Nuke all padding and backgrounds on the cells */
+.woocommerce div.product form.cart table.variations td.label,
+.woocommerce div.product form.cart table.variations td.value {
+    display: block !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    padding: 0 !important;
+    border: none !important;
+}
+
+.woocommerce div.product form.cart table.variations td.label {
+    width: auto !important;
+    line-height: 1 !important;
+}
+
+.woocommerce div.product form.cart table.variations td.label label {
+    color: #888 !important;
+    font-family: 'Space Grotesk', sans-serif !important;
+    text-transform: uppercase !important;
+    font-size: 14px !important;
+    letter-spacing: 2px !important;
+    font-weight: 700 !important;
+    margin: 0 !important;
+}
+
+.woocommerce div.product form.cart table.variations td.value {
+    flex-grow: 1 !important;
+    width: 100% !important;
+}
+
+/* Ensure the dropdown height matches the Equip Gear button */
+.woocommerce div.product form.cart table.variations select {
+    height: 60px !important;
+    margin: 0 !important;
+}
+
+.woocommerce div.product form.cart table.variations td.value {
+    background: transparent !important;
+}
+
+/* 2. Hide default browser up/down arrows in the number field */
+.woocommerce div.product form.cart div.quantity input.qty {
+    text-align: center !important;
+    -moz-appearance: textfield !important; /* Firefox */
+    border: none !important; /* Move border to wrapper */
+    width: 60px !important;
+    background: transparent !important;
+}
+.woocommerce div.product form.cart div.quantity input.qty::-webkit-outer-spin-button,
+.woocommerce div.product form.cart div.quantity input.qty::-webkit-inner-spin-button {
+    -webkit-appearance: none !important;
+    margin: 0;
+}
+
+/* 3. The Custom +/- Wrapper (Injected by JS) */
+.rd-qty-wrap {
+    display: flex !important;
+    align-items: center;
+    background-color: var(--rd-panel-bright) !important;
+    border: 1px solid var(--rd-outline) !important;
+    height: 60px;
+    margin-right: 15px;
+}
+
+.rd-qty-btn {
+    background: transparent !important;
+    color: var(--rd-teal) !important;
+    border: none !important;
+    width: 45px !important;
+    height: 100% !important;
+    font-size: 24px !important;
+    cursor: pointer;
+    transition: 0.2s ease;
+    font-family: 'Space Grotesk', sans-serif !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 !important;
+}
+
+.rd-qty-btn:hover {
+    background: var(--rd-teal) !important;
+    color: #000 !important;
+}
+
+/* Ensure Equip Gear button aligns properly */
+.woocommerce div.product form.cart .woocommerce-variation-add-to-cart {
+    display: flex !important;
+    align-items: center;
+}
+
+/* =========================================================
+   LIGHT THEME OVERRIDES
+   ========================================================= */
+
+/* 1. Swap the Core Variables */
+body[data-theme="light"] {
+    --rd-teal: #0eb3b0; /* Deeper cyan for better contrast on white */
+    --rd-outline: #d1d9e0; /* Light grey borders */
+    --rd-bg: #f4f7f9; /* Soft off-white background */
+    --rd-panel-bg: #ffffff; /* Pure white panels */
+    --rd-panel-bright: #f8fafc;
+    
+    color: #121416 !important;
+    background-image: radial-gradient(#d1d9e0 1px, transparent 0); /* Lighter grid pattern */
+}
+
+/* 2. Invert Text and Headings */
+body[data-theme="light"] h1,
+body[data-theme="light"] h2,
+body[data-theme="light"] h3,
+body[data-theme="light"] .product_title,
+body[data-theme="light"] .woocommerce div.product p.price,
+body[data-theme="light"] .woocommerce div.product span.price {
+    color: #121416 !important;
+}
+
+body[data-theme="light"] p,
+body[data-theme="light"] label,
+body[data-theme="light"] .woocommerce-product-details__short-description,
+body[data-theme="light"] .rd-simple-text {
+    color: #4a5568 !important;
+}
+
+/* 3. Invert Inputs and Textareas */
+body[data-theme="light"] input[type="text"],
+body[data-theme="light"] input[type="email"],
+body[data-theme="light"] input[type="number"],
+body[data-theme="light"] textarea,
+body[data-theme="light"] select {
+    background-color: #ffffff !important;
+    color: #121416 !important;
+    border-color: #d1d9e0 !important;
+}
+
+/* 4. Invert Buttons */
+body[data-theme="light"] .rd-btn,
+body[data-theme="light"] .button,
+body[data-theme="light"] #place_order {
+    color: #ffffff !important;
+}
+
+body[data-theme="light"] .rd-btn:hover,
+body[data-theme="light"] .button:hover,
+body[data-theme="light"] .rd-qty-btn:hover {
+    color: #ffffff !important;
+    background-color: #121416 !important; /* Buttons turn black on hover in light mode */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* =========================================================
+   THE FLOATING TOGGLE SWITCH UI
+   ========================================================= */
+.rd-theme-toggle {
+    position: fixed;
+    bottom: 30px;
+    right: 30px; /* Sits in the bottom right corner of the screen */
+    width: 55px;
+    height: 55px;
+    background: var(--rd-panel-bg);
+    border: 2px solid var(--rd-teal);
+    z-index: 9999;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    border-radius: 0; /* Keeping the CNC aesthetic */
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.rd-theme-toggle:hover {
+    background: var(--rd-teal);
+    transform: translateY(-5px);
+}
+
+/* =========================================================
+   LIGHT MODE: ELEMENTOR & DASHBOARD NUKE
+   ========================================================= */
+
+/* 1. Strip ALL Elementor Hardcoded Backgrounds (Attribute-Level Override) */
+body[data-theme="light"] .elementor-location-archive,
+body[data-theme="light"] section[data-element_type="section"],
+body[data-theme="light"] div[data-element_type="column"],
+body[data-theme="light"] div[data-element_type="widget"],
+body[data-theme="light"] .elementor-background-overlay,
+body[data-theme="light"] .elementor-widget-wrap {
+    background-color: transparent !important;
+    background-image: none !important;
+    background: transparent !important;
+}
+
+/* 2. Force Elementor Headings to be Dark & Readable */
+body[data-theme="light"] .elementor-heading-title,
+body[data-theme="light"] h1.elementor-heading-title,
+body[data-theme="light"] h2.elementor-heading-title,
+body[data-theme="light"] h3.elementor-heading-title,
+body[data-theme="light"] .elementor-widget-heading .elementor-heading-title {
+    color: #121416 !important;
+    text-shadow: none !important;
+    -webkit-text-stroke: 0px transparent !important; 
+}
+
+/* 3. Fix the "My Account" Rider Dashboard */
+body[data-theme="light"] .woocommerce-MyAccount-content,
+body[data-theme="light"] .woocommerce-MyAccount-navigation ul {
+    background-color: #ffffff !important;
+    border-color: #d1d9e0 !important;
+    color: #121416 !important;
+}
+
+body[data-theme="light"] .woocommerce-MyAccount-navigation-link a {
+    color: #4a5568 !important;
+    border-color: #d1d9e0 !important;
+}
+
+body[data-theme="light"] .woocommerce-MyAccount-navigation-link a:hover {
+    background-color: #f8fafc !important;
+    color: #121416 !important;
+}
+
+body[data-theme="light"] .woocommerce-MyAccount-navigation-link.is-active a {
+    color: var(--rd-teal) !important;
+    background-color: rgba(14, 179, 176, 0.05) !important;
+    border-left-color: var(--rd-teal) !important;
+}
+
+/* Ensure Dashboard form text is readable */
+body[data-theme="light"] .woocommerce-MyAccount-content p,
+body[data-theme="light"] .woocommerce-MyAccount-content label,
+body[data-theme="light"] .woocommerce-MyAccount-content legend {
+    color: #4a5568 !important;
+}
+
+/* 4. Fix Base of Operations Footer Text */
+body[data-theme="light"] .elementor-text-editor,
+body[data-theme="light"] .elementor-icon-box-description {
+    color: #4a5568 !important;
+}
+
+/* 5. Fix Quantity Input Text */
+body[data-theme="light"] .woocommerce div.product form.cart div.quantity input.qty,
+body[data-theme="light"] .rd-qty-wrap input.qty {
+    color: #121416 !important;
+}
+
+/* 6. Fix the Injected Product Title Colors */
+.product_title { color: #fff !important; }
+body[data-theme="light"] .product_title { color: #121416 !important; }

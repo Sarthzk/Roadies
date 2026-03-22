@@ -155,3 +155,193 @@ add_action( 'after_setup_theme', function() {
     add_theme_support( 'wc-product-gallery-lightbox' );
     add_theme_support( 'wc-product-gallery-slider' );
 });
+
+/**
+ * Auto-hide WooCommerce system notices after 4 seconds
+ */
+add_action('wp_footer', 'roadies_autohide_system_notices');
+function roadies_autohide_system_notices() {
+    ?>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Wait 4 seconds (4000ms), then execute fade out
+            setTimeout(function() {
+                const notices = document.querySelectorAll('.woocommerce-message, .woocommerce-error, .woocommerce-info');
+                
+                notices.forEach(notice => {
+                    // Apply smooth CSS transitions
+                    notice.style.transition = 'opacity 0.6s ease, max-height 0.6s ease, margin 0.6s ease, padding 0.6s ease';
+                    
+                    // Collapse the element
+                    notice.style.opacity = '0';
+                    notice.style.maxHeight = '0px';
+                    notice.style.margin = '0px';
+                    notice.style.padding = '0px';
+                    notice.style.border = 'none';
+                    
+                    // Completely remove from DOM after the animation finishes
+                    setTimeout(() => notice.remove(), 600); 
+                });
+            }, 4000); // Change this number to adjust how long the notification stays on screen
+        });
+    </script>
+    <?php
+}
+
+/**
+ * ARMORY UI ENGINE V3
+ * Bypasses Elementor to force Title, simple Size text, and +/- Buttons
+ */
+add_action('wp_footer', 'roadies_armory_ui_engine_v3');
+function roadies_armory_ui_engine_v3() {
+    if ( is_product() ) {
+        ?>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                
+                /* --- 1. THE AGGRESSIVE TITLE INJECTOR --- */
+                if (!document.querySelector('h1.product_title')) {
+                    // Grab the raw title from the browser tab
+                    let rawTitle = document.title.split('-')[0].trim(); 
+                    
+                    // Find the main right-hand column container
+                    const summaryContainer = document.querySelector('.summary.entry-summary') || document.querySelector('.summary');
+                    
+                    if (summaryContainer) {
+                        const titleHtml = `<h1 class="product_title" style="font-family: 'Space Grotesk', sans-serif !important; font-size: 42px !important; font-weight: 900 !important; text-transform: uppercase; line-height: 1.1; margin-top: 0; margin-bottom: 20px !important; display: block; width: 100%;">${rawTitle}</h1>`;
+						
+                        // Inject the title at the very top of the right column
+                        summaryContainer.insertAdjacentHTML('afterbegin', titleHtml);
+                    }
+                }
+
+                /* --- 2. THE "SIMPLE TEXT" VARIATION FIX --- */
+                const variationRows = document.querySelectorAll('table.variations tr');
+                variationRows.forEach(function(row) {
+                    const labelTd = row.querySelector('td.label');
+                    const valueTd = row.querySelector('td.value');
+                    
+                    if (labelTd && valueTd && !valueTd.querySelector('.rd-simple-text')) {
+                        // Grab the text (e.g. "Size")
+                        const labelText = labelTd.innerText.trim();
+                        
+                        // NUKE the stubborn Elementor box completely
+                        labelTd.style.display = 'none'; 
+                        
+                        // Create a simple, floating text element
+                        const simpleText = document.createElement('span');
+                        simpleText.className = 'rd-simple-text';
+                        simpleText.innerText = labelText;
+                        simpleText.style.cssText = "color: #888; font-family: 'Space Grotesk', sans-serif; text-transform: uppercase; font-size: 14px; font-weight: 700; letter-spacing: 2px; margin-right: 20px; white-space: nowrap;";
+                        
+                        // Turn the dropdown container into a perfectly aligned flex row
+                        valueTd.style.cssText = "display: flex !important; align-items: center !important; background: transparent !important; border: none !important; padding: 0 !important; margin-bottom: 25px;";
+                        
+                        // Ensure the select dropdown fills the remaining space
+                        const selectBox = valueTd.querySelector('select');
+                        if (selectBox) {
+                            selectBox.style.flexGrow = '1';
+                            selectBox.style.margin = '0';
+                        }
+
+                        // Inject the simple text right before the dropdown
+                        valueTd.insertBefore(simpleText, valueTd.firstChild);
+                    }
+                });
+
+                /* --- 3. QUANTITY +/- INJECTOR --- */
+                const qtyInputs = document.querySelectorAll('input.qty');
+                qtyInputs.forEach(function(input) {
+                    if (input.parentElement.classList.contains('rd-qty-wrap')) return;
+
+                    const wrapper = document.createElement('div');
+                    wrapper.className = 'rd-qty-wrap';
+                    
+                    const minusBtn = document.createElement('button');
+                    minusBtn.type = 'button';
+                    minusBtn.className = 'rd-qty-btn minus';
+                    minusBtn.innerText = '-';
+
+                    const plusBtn = document.createElement('button');
+                    plusBtn.type = 'button';
+                    plusBtn.className = 'rd-qty-btn plus';
+                    plusBtn.innerText = '+';
+
+                    input.parentNode.insertBefore(wrapper, input);
+                    wrapper.appendChild(minusBtn);
+                    wrapper.appendChild(input);
+                    wrapper.appendChild(plusBtn);
+
+                    minusBtn.addEventListener('click', function() {
+                        let val = parseFloat(input.value) || 0;
+                        let min = parseFloat(input.min) || 1;
+                        let step = parseFloat(input.step) || 1;
+                        if (val > min) {
+                            input.value = val - step;
+                            input.dispatchEvent(new Event('change', { bubbles: true })); 
+                        }
+                    });
+
+                    plusBtn.addEventListener('click', function() {
+                        let val = parseFloat(input.value) || 0;
+                        let max = parseFloat(input.max) || 9999;
+                        let step = parseFloat(input.step) || 1;
+                        if (val < max) {
+                            input.value = val + step;
+                            input.dispatchEvent(new Event('change', { bubbles: true })); 
+                        }
+                    });
+                });
+                
+            });
+        </script>
+        <?php
+    }
+}
+
+/**
+ * ARMORY THEME TOGGLE ENGINE
+ * Injects a floating HUD button and handles Light/Dark LocalStorage logic.
+ */
+add_action('wp_footer', 'roadies_theme_toggle_engine');
+function roadies_theme_toggle_engine() {
+    ?>
+    <button id="rd-theme-toggle" class="rd-theme-toggle" aria-label="Toggle Theme">
+        <span class="theme-icon">🌙</span>
+    </button>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const toggleBtn = document.getElementById('rd-theme-toggle');
+            const body = document.body;
+            const icon = toggleBtn.querySelector('.theme-icon');
+
+            // 1. Check user's previous preference on page load
+            const currentTheme = localStorage.getItem('roadies_theme');
+            
+            if (currentTheme === 'light') {
+                body.setAttribute('data-theme', 'light');
+                icon.innerText = '☀️';
+            } else {
+                body.setAttribute('data-theme', 'dark'); // Default state
+                icon.innerText = '🌙';
+            }
+
+            // 2. Listen for clicks and swap states
+            toggleBtn.addEventListener('click', function() {
+                if (body.getAttribute('data-theme') === 'light') {
+                    // Switch to Dark
+                    body.setAttribute('data-theme', 'dark');
+                    localStorage.setItem('roadies_theme', 'dark');
+                    icon.innerText = '🌙';
+                } else {
+                    // Switch to Light
+                    body.setAttribute('data-theme', 'light');
+                    localStorage.setItem('roadies_theme', 'light');
+                    icon.innerText = '☀️';
+                }
+            });
+        });
+    </script>
+    <?php
+}
