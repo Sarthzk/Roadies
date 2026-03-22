@@ -16,10 +16,11 @@ add_action( 'wp_enqueue_scripts', function() {
     // Parent Theme Styles
     wp_enqueue_style( 'parent-style', get_template_directory_uri() . '/style.css' );
 
-    // Kinetic Framework Fonts & Tailwind
-    wp_enqueue_style( 'rd-fonts', 'https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..900&family=Inter:wght@400..700&display=swap', false );
+    // Kinetic Framework Fonts (Space Grotesk, Inter, and IBM Plex Sans for Numbers)
+    wp_enqueue_style( 'rd-fonts', 'https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@800&family=Space+Grotesk:wght@300..900&family=Inter:wght@400..700&family=IBM+Plex+Sans:wght@400;700&display=swap', false );
+    
+    // Tailwind Engine
     wp_enqueue_script( 'rd-tailwind', 'https://cdn.tailwindcss.com', array(), null, false );
-	wp_enqueue_style( 'rd-fonts', 'https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@800&family=Space+Grotesk:wght@300..900&family=Inter:wght@400..700&family=IBM+Plex+Sans:wght@400;700&display=swap', false );
 
     // Child Theme Styles
     wp_enqueue_style( 'hello-elementor-child-style', get_stylesheet_uri(), ['parent-style'], '3.1.0' );
@@ -59,14 +60,14 @@ add_action( 'wp_head', function() {
         .cart-contents-count { 
             font-family: "IBM Plex Sans", sans-serif !important; 
             font-weight: 700 !important; 
-            font-variant-numeric: tabular-nums !important; /* Forces numbers to align in columns */
+            font-variant-numeric: tabular-nums !important; 
             letter-spacing: -0.02em !important;
         }
 
         /* 4. WOOCOMMERCE UI CLEANUP */
         .woocommerce-Price-currencySymbol {
             margin-right: 4px;
-            font-weight: 400; /* Slightly thinner symbol makes the numbers pop */
+            font-weight: 400; 
             color: #76d6d5;
         }
     </style>';
@@ -83,14 +84,53 @@ function rd_custom_btn_text( $text, $product ) {
     return __( 'EQUIP GEAR', 'hello-elementor-child' );
 }
 
-
-// Change Checkout Button Text (Force Priority 99)
+// Change Checkout Button Text
 add_filter( 'woocommerce_order_button_text', function() {
     return __( 'CONFIRM GEAR — DEPART', 'hello-elementor-child' );
 }, 99);
 
 /* ---------------------------------------------------------------
- * 3. SVG & MEDIA SUPPORT
+ * 3. RIDER DASHBOARD: INITIALIZE PROFILE (SIMPLIFIED)
+ * --------------------------------------------------------------- */
+
+// Wipe the default dashboard content hook
+remove_action( 'woocommerce_account_dashboard', 'woocommerce_account_dashboard' );
+
+// Inject the custom Roadies Dashboard
+add_action( 'woocommerce_account_dashboard', 'rd_kinetic_dashboard_greeting' );
+
+function rd_kinetic_dashboard_greeting() {
+    $current_user = wp_get_current_user();
+    $first_name = !empty($current_user->user_firstname) ? $current_user->user_firstname : $current_user->display_name;
+    
+    ?>
+    <div class="rd-profile-initialization">
+        <div class="rd-spec-box" style="margin-bottom: 30px; border-color: #76d6d5; background: rgba(118, 214, 213, 0.02);">
+            <span class="rd-spec-label">SYSTEM_STATUS: ONLINE // SESSION: ACTIVE</span>
+            <h2 style="font-family: 'Space Grotesk', sans-serif; font-weight: 900; color: #fff; text-transform: uppercase; letter-spacing: 2px; margin: 10px 0; font-size: 24px;">
+                RIDER PROFILE: <span class="text-teal"><?php echo esc_html( $first_name ); ?></span>
+            </h2>
+            <p style="font-family: 'Inter', sans-serif; color: #555; font-size: 10px; text-transform: uppercase; letter-spacing: 1px; margin: 0;">
+                Verified Hub: <span class="text-teal">Pimpri_HQ</span> // Accessing your gear and history...
+            </p>
+        </div>
+
+        <div class="rd-panel" style="padding: 35px; background: #121416; border: 1px solid #222828;">
+            <p style="margin: 0; font-size: 14px; line-height: 1.8; color: #999; font-family: 'Inter', sans-serif;">
+                From your dashboard, you can track your 
+                <a href="<?php echo esc_url( wc_get_endpoint_url( 'orders' ) ); ?>" class="text-teal" style="font-weight: 800; text-decoration: none; border-bottom: 1px solid #222828;">Recent Orders</a>, 
+                manage your 
+                <a href="<?php echo esc_url( wc_get_endpoint_url( 'edit-address' ) ); ?>" class="text-teal" style="font-weight: 800; text-decoration: none; border-bottom: 1px solid #222828;">Shipping & Billing Addresses</a>, 
+                and update your 
+                <a href="<?php echo esc_url( wc_get_endpoint_url( 'edit-account' ) ); ?>" class="text-teal" style="font-weight: 800; text-decoration: none; border-bottom: 1px solid #222828;">Account Settings</a>.
+            </p>
+        </div>
+    </div>
+    <?php
+}
+
+/* ---------------------------------------------------------------
+ * 4. SVG & MEDIA SUPPORT
  * --------------------------------------------------------------- */
 add_filter( 'upload_mimes', function( $mimes ) {
     if ( current_user_can( 'manage_options' ) ) {
@@ -101,17 +141,13 @@ add_filter( 'upload_mimes', function( $mimes ) {
 });
 
 /* ---------------------------------------------------------------
- * 4. MODULE LOADER (The Engine)
+ * 5. MODULE LOADER (The Engine)
  * --------------------------------------------------------------- */
-
-// Custom taxonomy for Riding Styles (Track, Street, Adventure)
 require_once get_stylesheet_directory() . '/inc/riding-taxonomy.php';
-
-// AJAX slide-out cart functionality (The Garage)
 require_once get_stylesheet_directory() . '/inc/ajax-cart.php';
 
 /* ---------------------------------------------------------------
- * 5. WOOCOMMERCE THEME SUPPORT
+ * 6. WOOCOMMERCE THEME SUPPORT
  * --------------------------------------------------------------- */
 add_action( 'after_setup_theme', function() {
     add_theme_support( 'woocommerce' );
