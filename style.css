@@ -1,7 +1,7 @@
 /*
 Theme Name: Hello Elementor Child
 Template: hello-elementor
-Version: 3.1.4
+Version: 3.1.5
 */
 
 :root {
@@ -12,7 +12,10 @@ Version: 3.1.4
 }
 
 /* THE CNC RULE: No rounding allowed */
-* { border-radius: 0px !important; box-sizing: border-box; }
+* { 
+    border-radius: 0px !important; 
+    box-sizing: border-box; 
+}
 
 body {
     background-color: var(--rd-bg) !important;
@@ -90,6 +93,12 @@ body {
     letter-spacing: 2px;
     display: block;
     margin-bottom: 5px;
+}
+
+/* HIDE PRODUCT META (SKU, CATEGORIES, TAGS) */
+/* This removes the cluttered text block below the 'Equip Gear' button */
+.product_meta {
+    display: none !important;
 }
 
 /* ==========================================================================
