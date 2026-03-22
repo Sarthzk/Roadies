@@ -1,7 +1,7 @@
 /*
 Theme Name: Hello Elementor Child
 Template: hello-elementor
-Version: 3.1.3
+Version: 3.1.4
 */
 
 :root {
@@ -73,10 +73,30 @@ body {
 }
 
 /* ==========================================================================
+   TECHNICAL SPEC BOX (The Armory Details)
+   ========================================================================== */
+.rd-spec-box {
+    border-left: 2px solid var(--rd-teal);
+    padding: 15px 20px;
+    margin: 20px 0;
+    background: rgba(118, 214, 213, 0.03);
+}
+
+.rd-spec-label {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 10px;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    display: block;
+    margin-bottom: 5px;
+}
+
+/* ==========================================================================
    WISHLIST ENGINE (TI WOOCOMMERCE WISHLIST)
    ========================================================================== */
 
-/* 1. Add to Wishlist Button Styling */
+/* 1. Add to Wishlist Button Styling (Product Page) */
 .tinv-wraper.tinv-wishlist {
     margin: 10px 0 !important;
     display: block !important;
@@ -105,10 +125,28 @@ body {
     border-color: var(--rd-teal) !important;
 }
 
-/* 2. Wishlist Table Styling */
+/* 2. Shortlist Overlay (Home Page Grid) */
+.rd-panel .tinvwl_add_to_wishlist_button.tinvwl-icon-heart {
+    background: #0c0e10 !important;
+    border: 1px solid var(--rd-outline) !important;
+    color: var(--rd-teal) !important;
+    width: 45px !important;
+    height: 45px !important;
+    padding: 0 !important;
+    font-size: 0 !important; /* Hide "Add to Wishlist" text in grid */
+}
+
+.rd-panel .tinvwl_add_to_wishlist_button.tinvwl-icon-heart::before {
+    font-size: 18px !important;
+    margin: 0 !important;
+}
+
+/* 3. Wishlist Table Styling */
 .tinv-wishlist .tinvwl-table-manage-list {
     background: var(--rd-panel-bg) !important;
     border: 1px solid var(--rd-outline) !important;
+    border-collapse: collapse;
+    width: 100%;
 }
 
 .tinv-wishlist thead th {
@@ -118,15 +156,17 @@ body {
     text-transform: uppercase !important;
     padding: 20px !important;
     border-bottom: 1px solid var(--rd-outline) !important;
+    text-align: left;
 }
 
 .tinv-wishlist td {
     border-bottom: 1px solid var(--rd-outline) !important;
     padding: 20px !important;
     color: #ffffff !important;
+    vertical-align: middle;
 }
 
-/* 3. Wishlist Action Buttons (Add to Cart) */
+/* 4. Wishlist Action Buttons (Add to Cart) */
 .tinv-wishlist .button.alt {
     background: var(--rd-teal) !important;
     color: #000 !important;
@@ -134,13 +174,14 @@ body {
     font-weight: 800 !important;
     text-transform: uppercase !important;
     padding: 12px 25px !important;
+    border: none !important;
 }
 
 .tinv-wishlist .button.alt:hover {
     background: #ffffff !important;
 }
 
-/* 4. Remove default heart icon background circles */
+/* 5. Remove default heart icon background circles */
 .tinvwl_add_to_wishlist_button::before {
     color: var(--rd-teal) !important;
     margin-right: 8px !important;

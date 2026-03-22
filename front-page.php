@@ -1,6 +1,7 @@
 <?php
 /**
  * Template Name: Roadies Custom Home
+ * Integrated with Wishlist (Shortlist) Engine
  */
 get_header(); ?>
 
@@ -41,10 +42,10 @@ get_header(); ?>
                 <?php
                 $args = array(
                     'post_type'      => 'product',
-                    'posts_per_page' => 4,
+                    'posts_per_page' => 8, // Increased to show more gear including the Tarmac Jacket
                     'orderby'        => 'date',
                     'order'          => 'DESC',
-                    'stock_status'   => 'instock' // Only show gear ready for the armory
+                    'stock_status'   => 'instock' 
                 );
                 
                 $loop = new WP_Query( $args );
@@ -54,7 +55,7 @@ get_header(); ?>
                         global $product; 
                         ?>
                         <div class="rd-panel group flex flex-col hover:border-[#76d6d5] bg-[#0c0e10] border border-[#222828] transition-all duration-300">
-                            <div class="p-8 bg-[#121416] border-b border-[#222828] aspect-square flex items-center justify-center overflow-hidden">
+                            <div class="p-8 bg-[#121416] border-b border-[#222828] aspect-square flex items-center justify-center overflow-hidden relative">
                                 <a href="<?php the_permalink(); ?>" class="w-full h-full flex items-center justify-center">
                                     <?php 
                                     if ( has_post_thumbnail() ) {
@@ -64,6 +65,12 @@ get_header(); ?>
                                     }
                                     ?>
                                 </a>
+                                
+                                <div class="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                    <?php if ( shortcode_exists( 'ti_wishlists_add_button' ) ) {
+                                        echo do_shortcode('[ti_wishlists_add_button]'); 
+                                    } ?>
+                                </div>
                             </div>
 
                             <div class="p-8 flex flex-col flex-grow">
@@ -75,7 +82,7 @@ get_header(); ?>
                                     <?php echo $product->get_price_html(); ?>
                                 </div>
 
-                                <div class="mt-auto">
+                                <div class="mt-auto flex flex-col gap-2">
                                     <a href="<?php echo esc_url( $product->add_to_cart_url() ); ?>" 
                                        class="rd-btn w-full text-center text-[10px] py-4 no-underline block tracking-widest">
                                        EQUIP GEAR
@@ -96,6 +103,28 @@ get_header(); ?>
 </div>
 
 <style>
+    /* Styling for the Shortcode Button Overlay */
+    .tinv-wraper.tinv-wishlist {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    .tinvwl_add_to_wishlist_button.tinvwl-icon-heart {
+        background: #0c0e10 !important;
+        border: 1px solid #222828 !important;
+        color: #76d6d5 !important;
+        padding: 10px !important;
+        width: 40px !important;
+        height: 40px !important;
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        font-size: 0 !important; /* Hide text, show only heart icon */
+    }
+    .tinvwl_add_to_wishlist_button:hover {
+        border-color: #76d6d5 !important;
+        background: #121416 !important;
+    }
+
     /* Ensure clean image rendering on dark bg */
     .rd-panel img {
         filter: brightness(0.9) contrast(1.1);
