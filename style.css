@@ -12,1139 +12,786 @@ Version: 3.1.7
   --rd-panel-bright: #121416;
 }
 
-/* THE CNC RULE: No rounding allowed */
-* { 
-    border-radius: 0px !important; 
-    box-sizing: border-box; 
-}
+* { border-radius: 0px !important; box-sizing: border-box; }
 
 body {
-    background-color: var(--rd-bg) !important;
-    background-image: radial-gradient(#1e2424 1px, transparent 0);
-    background-size: 45px 45px;
-    margin: 0;
-    overflow-x: hidden;
-    font-family: 'Inter', sans-serif;
-    color: #ffffff;
+  background-color: var(--rd-bg) !important;
+  background-image: radial-gradient(#1e2424 1px, transparent 0);
+  background-size: 45px 45px;
+  margin: 0;
+  overflow-x: hidden;
+  font-family: 'Inter', sans-serif;
+  color: #fff;
 }
 
-/* THE CHASSIS */
-.rd-chassis-max {
-    max-width: 1600px;
-    margin: 0 auto;
-    width: 100%;
-}
+.rd-chassis-max { max-width: 1600px; margin: 0 auto; width: 100%; }
 
 .rd-panel {
-    background-color: var(--rd-panel-bg) !important; 
-    border: 1px solid var(--rd-outline);
-    position: relative;
-    overflow: hidden;
+  background-color: var(--rd-panel-bg) !important;
+  border: 1px solid var(--rd-outline);
+  position: relative;
+  overflow: hidden;
 }
-
-/* ==========================================================================
-   KINETIC HUD EFFECTS
-   ========================================================================== */
 
 .rd-panel::after {
-    content: '';
-    position: absolute;
-    top: -100%;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(to bottom, transparent, rgba(118, 214, 213, 0.05), transparent);
-    transition: none;
-    pointer-events: none;
+  content: '';
+  position: absolute;
+  top: -100%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, transparent, rgba(118,214,213,0.05), transparent);
+  transition: none;
+  pointer-events: none;
 }
-
-.rd-panel:hover::after {
-    top: 100%;
-    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-}
+.rd-panel:hover::after { top: 100%; transition: all 0.6s cubic-bezier(0.4,0,0.2,1); }
 
 .rd-panel::before {
-    content: '';
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    width: 20px;
-    height: 20px;
-    border-top: 2px solid var(--rd-teal);
-    border-left: 2px solid var(--rd-teal);
-    opacity: 0;
-    transition: 0.3s ease;
-    z-index: 10;
+  content: '';
+  position: absolute;
+  top: 10px; left: 10px;
+  width: 20px; height: 20px;
+  border-top: 2px solid var(--rd-teal);
+  border-left: 2px solid var(--rd-teal);
+  opacity: 0;
+  transition: 0.3s ease;
+  z-index: 10;
 }
+.rd-panel:hover::before { opacity: 1; top: 0; left: 0; }
 
-.rd-panel:hover::before {
-    opacity: 1;
-    top: 0;
-    left: 0;
+/* GLITCH */
+.rd-glitch { position: relative; display: inline-block; }
+.rd-glitch::before, .rd-glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: var(--rd-bg);
 }
-
-/* ==========================================================================
-   TECHNICAL GLITCH ENGINE
-   ========================================================================== */
-.rd-glitch {
-    position: relative;
-    display: inline-block;
-}
-
-.rd-glitch::before,
-.rd-glitch::after {
-    content: attr(data-text);
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: var(--rd-bg);
-}
-
 .rd-glitch::before {
-    left: 2px;
-    text-shadow: -2px 0 var(--rd-teal);
-    clip: rect(44px, 450px, 56px, 0);
-    animation: rd-glitch-anim 5s infinite linear alternate-reverse;
+  left: 2px;
+  text-shadow: -2px 0 var(--rd-teal);
+  clip: rect(44px, 450px, 56px, 0);
+  animation: rd-glitch-anim 5s infinite linear alternate-reverse;
 }
-
 .rd-glitch::after {
-    left: -2px;
-    text-shadow: -2px 0 #fff;
-    clip: rect(100px, 450px, 120px, 0);
-    animation: rd-glitch-anim-2 1s infinite linear alternate-reverse;
+  left: -2px;
+  text-shadow: -2px 0 #fff;
+  clip: rect(100px, 450px, 120px, 0);
+  animation: rd-glitch-anim-2 1s infinite linear alternate-reverse;
 }
-
 @keyframes rd-glitch-anim {
-    0% { clip: rect(31px, 9999px, 94px, 0); }
-    20% { clip: rect(62px, 9999px, 42px, 0); }
-    40% { clip: rect(13px, 9999px, 61px, 0); }
-    60% { clip: rect(85px, 9999px, 20px, 0); }
-    80% { clip: rect(44px, 9999px, 95px, 0); }
-    100% { clip: rect(13px, 9999px, 61px, 0); }
+  0%   { clip: rect(31px, 9999px, 94px, 0); }
+  20%  { clip: rect(62px, 9999px, 42px, 0); }
+  40%  { clip: rect(13px, 9999px, 61px, 0); }
+  60%  { clip: rect(85px, 9999px, 20px, 0); }
+  80%  { clip: rect(44px, 9999px, 95px, 0); }
+  100% { clip: rect(13px, 9999px, 61px, 0); }
 }
-
 @keyframes rd-glitch-anim-2 {
-    0% { clip: rect(65px, 9999px, 100px, 0); }
-    50% { clip: rect(10px, 9999px, 30px, 0); }
-    100% { clip: rect(80px, 9999px, 10px, 0); }
+  0%   { clip: rect(65px, 9999px, 100px, 0); }
+  50%  { clip: rect(10px, 9999px, 30px, 0); }
+  100% { clip: rect(80px, 9999px, 10px, 0); }
 }
 
 /* TYPOGRAPHY */
 .rd-hero-title {
-    font-family: 'Space Grotesk', sans-serif;
-    font-weight: 900;
-    font-size: clamp(4rem, 9vw, 8.5rem) !important; 
-    line-height: 0.85;
-    letter-spacing: -0.04em; 
-    text-transform: uppercase;
-    color: #ffffff;
-    margin-bottom: 2.5rem;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 900;
+  font-size: clamp(4rem, 9vw, 8.5rem) !important;
+  line-height: 0.85;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+  color: #fff;
+  margin-bottom: 2.5rem;
 }
-
 .text-teal { color: var(--rd-teal) !important; }
 
-/* MECHANICAL BUTTON */
+/* BUTTON */
 .rd-btn {
-    background: var(--rd-teal);
-    color: #000;
-    font-family: 'Space Grotesk', sans-serif;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    padding: 20px 50px;
-    border: none;
-    cursor: pointer;
-    transition: 100ms cubic-bezier(0.4, 0, 0.2, 1);
-    display: inline-block;
-    text-decoration: none;
-    text-align: center;
+  background: var(--rd-teal);
+  color: #000;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  padding: 20px 50px;
+  border: none;
+  cursor: pointer;
+  transition: 100ms cubic-bezier(0.4,0,0.2,1);
+  display: inline-block;
+  text-decoration: none;
+  text-align: center;
 }
+.rd-btn:hover { background: #fff; box-shadow: 0 0 20px rgba(118,214,213,0.5); }
 
-.rd-btn:hover { 
-    background: #ffffff; 
-    box-shadow: 0 0 20px rgba(118, 214, 213, 0.5); 
-}
-
-/* TECHNICAL SPEC BOX */
+/* SPEC BOX */
 .rd-spec-box {
-    border-left: 2px solid var(--rd-teal);
-    padding: 15px 20px;
-    margin: 20px 0;
-    background: rgba(118, 214, 213, 0.03);
+  border-left: 2px solid var(--rd-teal);
+  padding: 15px 20px;
+  margin: 20px 0;
+  background: rgba(118,214,213,0.03);
 }
-
 .rd-spec-label {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 10px;
-    color: #666;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    display: block;
-    margin-bottom: 5px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 10px;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  display: block;
+  margin-bottom: 5px;
 }
 
-/* ==========================================================================
-   RIDER DASHBOARD (MY ACCOUNT) OVERHAUL
-   ========================================================================== */
+/* MY ACCOUNT */
 .woocommerce-account .woocommerce {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    gap: 40px;
-    padding: 60px 20px;
-    max-width: 1400px;
-    margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 40px;
+  padding: 60px 20px;
+  max-width: 1400px;
+  margin: 0 auto;
 }
-
-/* Tactical Navigation Sidebar */
-.woocommerce-MyAccount-navigation {
-    flex: 0 0 280px;
-}
-
+.woocommerce-MyAccount-navigation { flex: 0 0 280px; }
 .woocommerce-MyAccount-navigation ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    border: 1px solid var(--rd-outline);
-    background: var(--rd-panel-bg);
+  list-style: none;
+  padding: 0; margin: 0;
+  border: 1px solid var(--rd-outline);
+  background: var(--rd-panel-bg);
 }
-
-.woocommerce-MyAccount-navigation-link {
-    border-bottom: 1px solid var(--rd-outline);
-}
-
-.woocommerce-MyAccount-navigation-link:last-child {
-    border-bottom: none;
-}
-
+.woocommerce-MyAccount-navigation-link { border-bottom: 1px solid var(--rd-outline); }
+.woocommerce-MyAccount-navigation-link:last-child { border-bottom: none; }
 .woocommerce-MyAccount-navigation-link a {
-    display: block;
-    padding: 20px 25px;
-    color: #666;
-    text-decoration: none;
-    font-family: 'Space Grotesk', sans-serif;
-    text-transform: uppercase;
-    font-size: 11px;
-    letter-spacing: 0.2em;
-    font-weight: 700;
-    transition: 0.3s ease;
+  display: block;
+  padding: 20px 25px;
+  color: #666;
+  text-decoration: none;
+  font-family: 'Space Grotesk', sans-serif;
+  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  font-weight: 700;
+  transition: 0.3s ease;
 }
-
-.woocommerce-MyAccount-navigation-link a:hover {
-    color: #fff;
-    background: var(--rd-panel-bright);
-}
-
+.woocommerce-MyAccount-navigation-link a:hover { color: #fff; background: var(--rd-panel-bright); }
 .woocommerce-MyAccount-navigation-link.is-active a {
-    color: var(--rd-teal);
-    background: rgba(118, 214, 213, 0.03);
-    border-left: 3px solid var(--rd-teal);
+  color: var(--rd-teal);
+  background: rgba(118,214,213,0.03);
+  border-left: 3px solid var(--rd-teal);
 }
-
-/* Content Chassis */
 .woocommerce-MyAccount-content {
-    flex-grow: 1;
-    background: var(--rd-panel-bg);
-    border: 1px solid var(--rd-outline);
-    padding: 40px;
-    position: relative;
+  flex-grow: 1;
+  background: var(--rd-panel-bg);
+  border: 1px solid var(--rd-outline);
+  padding: 40px;
+  position: relative;
 }
-
 .woocommerce-MyAccount-content::before {
-    content: 'SYSTEM_DASHBOARD // PROFILE_ACTIVE';
-    position: absolute;
-    top: -10px;
-    right: 20px;
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 9px;
-    color: var(--rd-outline);
-    background: var(--rd-bg);
-    padding: 0 10px;
-    letter-spacing: 2px;
+  content: 'SYSTEM_DASHBOARD // PROFILE_ACTIVE';
+  position: absolute;
+  top: -10px; right: 20px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 9px;
+  color: var(--rd-outline);
+  background: var(--rd-bg);
+  padding: 0 10px;
+  letter-spacing: 2px;
 }
-
-.woocommerce-MyAccount-content mark {
-    background: transparent;
-    color: var(--rd-teal);
-    font-weight: 800;
-}
-
-/* Forms & Dashboard Inputs */
-.woocommerce-EditAccountForm fieldset {
-    border: 1px solid var(--rd-outline);
-    padding: 20px;
-    margin-top: 20px;
-}
-
+.woocommerce-MyAccount-content mark { background: transparent; color: var(--rd-teal); font-weight: 800; }
+.woocommerce-EditAccountForm fieldset { border: 1px solid var(--rd-outline); padding: 20px; margin-top: 20px; }
 .woocommerce-form-row input {
-    background: var(--rd-panel-bright) !important;
-    border: 1px solid var(--rd-outline) !important;
-    color: #fff !important;
-    padding: 15px !important;
-    font-family: 'Inter', sans-serif !important;
+  background: var(--rd-panel-bright) !important;
+  border: 1px solid var(--rd-outline) !important;
+  color: #fff !important;
+  padding: 15px !important;
+  font-family: 'Inter', sans-serif !important;
 }
+.woocommerce-MyAccount-content > p:first-of-type { display: none !important; }
 
-/* ==========================================================================
-   ARMORY CART & CHECKOUT STYLING
-   ========================================================================== */
-.woocommerce-cart-form__contents {
-    background: var(--rd-panel-bg) !important;
-    border: 1px solid var(--rd-outline) !important;
-}
-
+/* CART & CHECKOUT */
+.woocommerce-cart-form__contents { background: var(--rd-panel-bg) !important; border: 1px solid var(--rd-outline) !important; }
 .shop_table thead th {
-    background: var(--rd-panel-bright) !important;
-    color: var(--rd-teal) !important;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    border-bottom: 1px solid var(--rd-outline) !important;
+  background: var(--rd-panel-bright) !important;
+  color: var(--rd-teal) !important;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-bottom: 1px solid var(--rd-outline) !important;
 }
+.cart_item td { border-bottom: 1px solid var(--rd-outline) !important; padding: 25px !important; background: transparent !important; }
+.cart-collaterals .cart_totals { background: var(--rd-panel-bg) !important; border: 1px solid var(--rd-outline) !important; padding: 30px !important; }
 
-.cart_item td {
-    border-bottom: 1px solid var(--rd-outline) !important;
-    padding: 25px !important;
-    background: transparent !important;
-}
-
-.cart-collaterals .cart_totals {
-    background: var(--rd-panel-bg) !important;
-    border: 1px solid var(--rd-outline) !important;
-    padding: 30px !important;
-}
-
-/* ==========================================================================
-   WISHLIST ENGINE
-   ========================================================================== */
-.tinv-wraper.tinv-wishlist {
-    margin: 10px 0 !important;
-    display: block !important;
-    width: 100%;
-}
-
+/* WISHLIST */
+.tinv-wraper.tinv-wishlist { margin: 10px 0 !important; display: block !important; width: 100%; }
 .tinvwl_add_to_wishlist_button {
-    background: transparent !important;
-    border: 1px solid var(--rd-outline) !important;
-    color: var(--rd-teal) !important;
-    font-family: 'Space Grotesk', sans-serif !important;
-    font-weight: 700 !important;
-    text-transform: uppercase !important;
-    letter-spacing: 1.5px !important;
-    padding: 15px !important;
-    width: 100% !important;
-    transition: 0.2s ease-in-out !important;
-    display: flex !important;
-    align-items: center;
-    justify-content: center;
+  background: transparent !important;
+  border: 1px solid var(--rd-outline) !important;
+  color: var(--rd-teal) !important;
+  font-family: 'Space Grotesk', sans-serif !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 1.5px !important;
+  padding: 15px !important;
+  width: 100% !important;
+  transition: 0.2s ease-in-out !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
 }
-
-.tinv-wishlist .tinvwl-table-manage-list {
-    background: var(--rd-panel-bg) !important;
-    border: 1px solid var(--rd-outline) !important;
-}
-
-/* HIDE PRODUCT META */
+.tinv-wishlist .tinvwl-table-manage-list { background: var(--rd-panel-bg) !important; border: 1px solid var(--rd-outline) !important; }
 .product_meta { display: none !important; }
 
-/* Nuke the default WooCommerce greeting paragraph */
-.woocommerce-MyAccount-content > p:first-of-type {
-    display: none !important;
-}
-
-
-/* =========================================================
-   ROADIES ARMORY - SINGLE PRODUCT UI OVERRIDE
-   ========================================================= */
-
-/* 1. The Main Split-Screen Grid */
+/* SINGLE PRODUCT */
 .woocommerce div.product {
-    display: grid !important;
-    grid-template-columns: 1fr 1fr;
-    gap: 60px;
-    align-items: start;
-    max-width: 1400px;
-    margin: 60px auto;
-    padding: 0 40px;
+  display: grid !important;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: start;
+  max-width: 1400px;
+  margin: 60px auto;
+  padding: 0 40px;
 }
-
-/* 2. Left Column: The Tech Viewer (Images) */
 .woocommerce div.product div.images {
-    width: 100% !important;
-    float: none !important;
-    background-color: #121416;
-    border: 1px solid #222828;
-    padding: 40px;
-    border-radius: 0;
+  width: 100% !important;
+  float: none !important;
+  background-color: #121416;
+  border: 1px solid #222828;
+  padding: 40px;
 }
-
-.woocommerce div.product div.images img {
-    width: 100%;
-    height: auto;
-    display: block;
-}
-
-/* Thumbnail Gallery Cleanup */
+.woocommerce div.product div.images img { width: 100%; height: auto; display: block; }
 .woocommerce div.product div.images .flex-control-thumbs {
-    margin-top: 20px;
-    display: flex;
-    gap: 10px;
-    padding: 0;
+  margin-top: 20px;
+  display: flex;
+  gap: 10px;
+  padding: 0;
 }
 .woocommerce div.product div.images .flex-control-thumbs li {
-    width: calc(25% - 7.5px) !important;
-    border: 1px solid #222828;
-    background: #0c0e10;
-    list-style: none;
+  width: calc(25% - 7.5px) !important;
+  border: 1px solid #222828;
+  background: #0c0e10;
+  list-style: none;
 }
-.woocommerce div.product div.images .flex-control-thumbs li img {
-    opacity: 0.5;
-    transition: all 0.3s ease;
-    cursor: pointer;
-}
+.woocommerce div.product div.images .flex-control-thumbs li img { opacity: 0.5; transition: all 0.3s ease; cursor: pointer; }
 .woocommerce div.product div.images .flex-control-thumbs li img.flex-active,
-.woocommerce div.product div.images .flex-control-thumbs li img:hover {
-    opacity: 1;
-    border-color: #76d6d5;
-}
+.woocommerce div.product div.images .flex-control-thumbs li img:hover { opacity: 1; border-color: #76d6d5; }
 
-/* 3. Right Column: Telemetry & Specs (Summary) */
-.woocommerce div.product div.summary {
-    width: 100% !important;
-    float: none !important;
-    display: flex;
-    flex-direction: column;
-}
+.woocommerce div.product div.summary { width: 100% !important; float: none !important; display: flex; flex-direction: column; }
 
-/* Product Title */
+.product_title,
 .woocommerce div.product .product_title {
-    font-family: 'Space Grotesk', sans-serif !important;
-    font-size: 42px !important;
-    font-weight: 900 !important;
-    color: #fff !important;
-    text-transform: uppercase;
-    line-height: 1.1;
-    letter-spacing: -1px;
-    margin-top: 0;
-    margin-bottom: 20px !important;
+  font-family: 'Space Grotesk', sans-serif !important;
+  font-size: 42px !important;
+  font-weight: 900 !important;
+  color: #fff !important;
+  text-transform: uppercase;
+  line-height: 1.1;
+  letter-spacing: -1px;
+  margin-top: 0;
+  margin-bottom: 20px !important;
 }
 
-/* Price Display */
 .woocommerce div.product p.price,
 .woocommerce div.product span.price {
-    font-family: 'IBM Plex Sans', sans-serif !important;
-    font-size: 32px !important;
-    font-weight: 900 !important;
-    color: #76d6d5 !important;
-    margin-bottom: 30px !important;
-    padding-bottom: 30px;
-    border-bottom: 1px solid #222828;
+  font-family: 'IBM Plex Sans', sans-serif !important;
+  font-size: 32px !important;
+  font-weight: 900 !important;
+  color: #76d6d5 !important;
+  margin-bottom: 30px !important;
+  padding-bottom: 30px;
+  border-bottom: 1px solid #222828;
 }
-
-/* Description Text */
 .woocommerce div.product .woocommerce-product-details__short-description {
-    font-family: 'Inter', sans-serif;
-    color: #888;
-    font-size: 14px;
-    line-height: 1.8;
-    margin-bottom: 40px;
+  font-family: 'Inter', sans-serif;
+  color: #888;
+  font-size: 14px;
+  line-height: 1.8;
+  margin-bottom: 40px;
 }
 
-/* 4. The Action Area (Quantity, Dropdowns & Equip Button) */
+/* CART FORM */
 .woocommerce div.product form.cart {
-    display: block !important; /* Reset to block so tables don't break */
-    margin-top: 20px;
-    padding-top: 30px;
-    border-top: 1px solid var(--rd-outline);
+  display: block !important;
+  margin-top: 20px;
+  padding-top: 30px;
+  border-top: 1px solid var(--rd-outline);
 }
+.woocommerce div.product form.cart:not(.variations_form) { display: flex !important; gap: 15px; align-items: center; }
 
-/* Flexbox layout ONLY for simple products */
-.woocommerce div.product form.cart:not(.variations_form) {
-    display: flex !important;
-    gap: 15px;
-    align-items: center;
-}
-
-/* =========================================================
-   VARIABLE PRODUCT STYLING (Dropdowns)
-   ========================================================= */
+/* VARIATIONS */
 .woocommerce div.product form.cart table.variations {
-    width: 100%;
-    margin-bottom: 25px;
-    border: none !important;
+  display: block !important;
+  width: 100%;
+  margin-bottom: 25px !important;
+  border: none !important;
 }
-
-.woocommerce div.product form.cart table.variations td {
-    padding: 10px 0;
-    vertical-align: middle;
-    background: transparent !important;
-    border: none !important;
+.woocommerce div.product form.cart table.variations tbody { display: block !important; }
+.woocommerce div.product form.cart table.variations tr {
+  display: flex !important;
+  align-items: center !important;
+  gap: 20px !important;
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
 }
-
-.woocommerce div.product form.cart table.variations td.label {
-    width: 80px;
-    color: #888;
-    font-family: 'Space Grotesk', sans-serif;
-    text-transform: uppercase;
-    font-size: 12px;
-    letter-spacing: 2px;
+.woocommerce div.product form.cart table.variations td.label,
+.woocommerce div.product form.cart table.variations td.value {
+  display: block !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  padding: 0 !important;
+  border: none !important;
 }
-
-/* Dark Mode Dropdown Select */
+.woocommerce div.product form.cart table.variations td.label { width: auto !important; line-height: 1 !important; }
+.woocommerce div.product form.cart table.variations td.label label {
+  color: #888 !important;
+  font-family: 'Space Grotesk', sans-serif !important;
+  text-transform: uppercase !important;
+  font-size: 14px !important;
+  letter-spacing: 2px !important;
+  font-weight: 700 !important;
+  margin: 0 !important;
+}
+.woocommerce div.product form.cart table.variations td.value { flex-grow: 1 !important; width: 100% !important; }
 .woocommerce div.product form.cart table.variations select {
-    width: 100%;
-    background-color: var(--rd-panel-bright) !important;
-    border: 1px solid var(--rd-outline) !important;
-    color: #fff !important;
-    padding: 15px !important;
-    font-family: 'Inter', sans-serif !important;
-    border-radius: 0 !important;
-    cursor: pointer;
-    transition: all 0.3s ease;
+  width: 100%;
+  height: 60px !important;
+  background-color: var(--rd-panel-bright) !important;
+  border: 1px solid var(--rd-outline) !important;
+  color: #fff !important;
+  padding: 15px !important;
+  font-family: 'Inter', sans-serif !important;
+  border-radius: 0 !important;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin: 0 !important;
 }
-
 .woocommerce div.product form.cart table.variations select:focus {
-    border-color: var(--rd-teal) !important;
-    outline: none !important;
-    box-shadow: 0 0 10px rgba(118, 214, 213, 0.1);
+  border-color: var(--rd-teal) !important;
+  outline: none !important;
+  box-shadow: 0 0 10px rgba(118,214,213,0.1);
 }
+.woocommerce-variation.single_variation { margin-bottom: 20px; font-family: 'Inter', sans-serif; color: var(--rd-teal); }
+.woocommerce div.product form.cart .woocommerce-variation-add-to-cart { display: flex !important; gap: 15px; align-items: center; width: 100%; }
 
-/* Flexbox layout for the bottom row of variable products */
-.woocommerce div.product form.cart .woocommerce-variation-add-to-cart {
-    display: flex !important;
-    gap: 15px;
-    align-items: center;
-    width: 100%;
-}
-
-/* Clear the weird price text woo injects above the button */
-.woocommerce-variation.single_variation {
-    margin-bottom: 20px;
-    font-family: 'Inter', sans-serif;
-    color: var(--rd-teal);
-}
-
-/* Dark Mode Quantity Box */
-.woocommerce div.product form.cart div.quantity {
-    float: none !important;
-    margin: 0 !important;
-}
-
+/* QUANTITY */
+.woocommerce div.product form.cart div.quantity { float: none !important; margin: 0 !important; }
 .woocommerce div.product form.cart div.quantity input.qty {
-    width: 80px !important;
-    height: 60px !important;
-    background-color: #121416 !important;
-    border: 1px solid #222828 !important;
-    color: #fff !important;
-    font-family: 'IBM Plex Sans', sans-serif;
-    font-weight: 700;
-    font-size: 18px;
-    border-radius: 0 !important;
-    padding: 0;
-    text-align: center;
-    transition: all 0.3s ease;
+  width: 60px !important;
+  height: 60px !important;
+  background: transparent !important;
+  border: none !important;
+  color: #fff !important;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  border-radius: 0 !important;
+  padding: 0;
+  text-align: center !important;
+  -moz-appearance: textfield !important;
+  transition: all 0.3s ease;
 }
+.woocommerce div.product form.cart div.quantity input.qty:focus { border-color: #76d6d5 !important; outline: none !important; box-shadow: 0 0 10px rgba(118,214,213,0.1); }
+.woocommerce div.product form.cart div.quantity input.qty::-webkit-outer-spin-button,
+.woocommerce div.product form.cart div.quantity input.qty::-webkit-inner-spin-button { -webkit-appearance: none !important; margin: 0; }
 
-.woocommerce div.product form.cart div.quantity input.qty:focus {
-    border-color: #76d6d5 !important;
-    outline: none !important;
-    box-shadow: 0 0 10px rgba(118, 214, 213, 0.1);
+/* QTY WRAPPER */
+.rd-qty-wrap {
+  display: flex !important;
+  align-items: center;
+  background-color: var(--rd-panel-bright) !important;
+  border: 1px solid var(--rd-outline) !important;
+  height: 60px;
+  margin-right: 15px;
 }
+.rd-qty-btn {
+  background: transparent !important;
+  color: var(--rd-teal) !important;
+  border: none !important;
+  width: 45px !important;
+  height: 100% !important;
+  font-size: 24px !important;
+  cursor: pointer;
+  transition: 0.2s ease;
+  font-family: 'Space Grotesk', sans-serif !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 !important;
+}
+.rd-qty-btn:hover { background: var(--rd-teal) !important; color: #000 !important; }
 
-/* Equip Gear Button Override (Kill the Purple!) */
+/* ADD TO CART BUTTON */
 .woocommerce div.product form.cart .button {
-    flex-grow: 1;
-    height: 60px;
-    background-color: #76d6d5 !important;
-    color: #000 !important;
-    font-family: 'Space Grotesk', sans-serif !important;
-    font-weight: 900 !important;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    border-radius: 0 !important;
-    transition: all 0.3s ease !important;
-    border: none !important;
-    padding: 0 30px !important;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  flex-grow: 1;
+  height: 60px;
+  background-color: #76d6d5 !important;
+  color: #000 !important;
+  font-family: 'Space Grotesk', sans-serif !important;
+  font-weight: 900 !important;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  border-radius: 0 !important;
+  transition: all 0.3s ease !important;
+  border: none !important;
+  padding: 0 30px !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+.woocommerce div.product form.cart .button:hover { background-color: #fff !important; box-shadow: 0 0 20px rgba(118,214,213,0.4) !important; }
 
-.woocommerce div.product form.cart .button:hover {
-    background-color: #fff !important;
-    box-shadow: 0 0 20px rgba(118, 214, 213, 0.4) !important;
-}
-
-/* Clean up meta data (SKU, Categories) */
+/* PRODUCT META */
 .woocommerce div.product .product_meta {
-    margin-top: 30px;
-    padding-top: 20px;
-    border-top: 1px solid #222828;
-    font-family: 'Inter', sans-serif;
-    font-size: 10px;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    color: #555;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid #222828;
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #555;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
-.woocommerce div.product .product_meta a {
-    color: #76d6d5;
-    text-decoration: none;
-}
-.woocommerce div.product .product_meta a:hover {
-    color: #fff;
-}
+.woocommerce div.product .product_meta a { color: #76d6d5; text-decoration: none; }
+.woocommerce div.product .product_meta a:hover { color: #fff; }
 
-/* Responsive Stacking for Mobile */
 @media (max-width: 992px) {
-    .woocommerce div.product {
-        grid-template-columns: 1fr !important;
-        gap: 40px;
-        padding: 0 20px;
-    }
+  .woocommerce div.product { grid-template-columns: 1fr !important; gap: 40px; padding: 0 20px; }
 }
 
-/* =========================================================
-   FIX: BOTTOM TABS & RELATED PRODUCTS WRAPPING
-   ========================================================= */
-
-/* Force tabs and related products to span ALL columns at the bottom */
+/* TABS & RELATED â€” FULL WIDTH */
 .woocommerce div.product div.woocommerce-tabs,
 .woocommerce div.product section.related.products,
 .woocommerce div.product section.upsells.products {
-    grid-column: 1 / -1 !important;
-    width: 100% !important;
-    margin-top: 80px !important;
-    clear: both !important;
-    border-top: 1px solid var(--rd-outline);
-    padding-top: 60px;
+  grid-column: 1 / -1 !important;
+  width: 100% !important;
+  margin-top: 80px !important;
+  clear: both !important;
+  border-top: 1px solid var(--rd-outline);
+  padding-top: 60px;
 }
 
-/* =========================================================
-   ARMORY TAB STYLING (Description, Specs, Reviews)
-   ========================================================= */
-
+/* TABS */
 .woocommerce div.product .woocommerce-tabs ul.tabs {
-    border-bottom: 1px solid var(--rd-outline) !important;
-    margin: 0 0 30px !important;
-    padding: 0 !important;
-    display: flex;
-    gap: 10px;
+  border-bottom: 1px solid var(--rd-outline) !important;
+  margin: 0 0 30px !important;
+  padding: 0 !important;
+  display: flex;
+  gap: 10px;
 }
-
 .woocommerce div.product .woocommerce-tabs ul.tabs li {
-    background: var(--rd-bg) !important;
-    border: 1px solid var(--rd-outline) !important;
-    border-bottom: none !important;
-    border-radius: 0 !important;
-    margin: 0 !important;
-    padding: 0 !important;
+  background: var(--rd-bg) !important;
+  border: 1px solid var(--rd-outline) !important;
+  border-bottom: none !important;
+  border-radius: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
 }
-
-.woocommerce div.product .woocommerce-tabs ul.tabs li.active {
-    background: var(--rd-panel-bg) !important;
-    border-top: 3px solid var(--rd-teal) !important;
-}
-
+.woocommerce div.product .woocommerce-tabs ul.tabs li.active { background: var(--rd-panel-bg) !important; border-top: 3px solid var(--rd-teal) !important; }
 .woocommerce div.product .woocommerce-tabs ul.tabs li a {
-    color: #666 !important;
-    font-family: 'Space Grotesk', sans-serif !important;
-    text-transform: uppercase;
-    font-weight: 800;
-    letter-spacing: 2px;
-    padding: 15px 30px !important;
-    display: block;
-    text-decoration: none;
+  color: #666 !important;
+  font-family: 'Space Grotesk', sans-serif !important;
+  text-transform: uppercase;
+  font-weight: 800;
+  letter-spacing: 2px;
+  padding: 15px 30px !important;
+  display: block;
+  text-decoration: none;
 }
-
 .woocommerce div.product .woocommerce-tabs ul.tabs li.active a,
-.woocommerce div.product .woocommerce-tabs ul.tabs li a:hover {
-    color: var(--rd-teal) !important;
-}
-
-/* Tab Content Box */
+.woocommerce div.product .woocommerce-tabs ul.tabs li a:hover { color: var(--rd-teal) !important; }
 .woocommerce div.product .woocommerce-tabs .panel {
-    background: var(--rd-panel-bg);
-    border: 1px solid var(--rd-outline);
-    padding: 40px;
-    color: #aaa;
-    font-family: 'Inter', sans-serif;
-    line-height: 1.8;
+  background: var(--rd-panel-bg);
+  border: 1px solid var(--rd-outline);
+  padding: 40px;
+  color: #aaa;
+  font-family: 'Inter', sans-serif;
+  line-height: 1.8;
 }
-
 .woocommerce div.product .woocommerce-tabs .panel h2 {
-    font-family: 'Space Grotesk', sans-serif;
-    color: #fff;
-    text-transform: uppercase;
-    font-size: 24px;
-    margin-top: 0;
-    margin-bottom: 20px;
+  font-family: 'Space Grotesk', sans-serif;
+  color: #fff;
+  text-transform: uppercase;
+  font-size: 24px;
+  margin-top: 0;
+  margin-bottom: 20px;
 }
-
-/* Ensure WooCommerce spec tables match dark mode */
-.woocommerce div.product .woocommerce-tabs table.shop_attributes {
-    border: 1px solid var(--rd-outline);
-}
+.woocommerce div.product .woocommerce-tabs table.shop_attributes { border: 1px solid var(--rd-outline); }
 .woocommerce div.product .woocommerce-tabs table.shop_attributes th,
 .woocommerce div.product .woocommerce-tabs table.shop_attributes td {
-    border-bottom: 1px solid var(--rd-outline);
-    padding: 15px;
-    color: #ccc;
-    background: transparent;
-    font-style: normal;
+  border-bottom: 1px solid var(--rd-outline);
+  padding: 15px;
+  color: #ccc;
+  background: transparent;
+  font-style: normal;
 }
 .woocommerce div.product .woocommerce-tabs table.shop_attributes th {
-    background: var(--rd-panel-bright);
-    color: #fff;
-    font-family: 'Space Grotesk', sans-serif;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+  background: var(--rd-panel-bright);
+  color: #fff;
+  font-family: 'Space Grotesk', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
-/* =========================================================
-   RELATED PRODUCTS GRID FIX
-   ========================================================= */
-
+/* RELATED PRODUCTS */
 .woocommerce div.product section.related.products h2 {
-    font-family: 'Space Grotesk', sans-serif !important;
-    color: #fff !important;
-    text-transform: uppercase;
-    font-size: 32px !important;
-    letter-spacing: -1px;
-    margin-bottom: 40px !important;
+  font-family: 'Space Grotesk', sans-serif !important;
+  color: #fff !important;
+  text-transform: uppercase;
+  font-size: 32px !important;
+  letter-spacing: -1px;
+  margin-bottom: 40px !important;
 }
-
-/* Force Related Products into a rigid grid */
 .woocommerce div.product section.related.products ul.products {
-    display: grid !important;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)) !important;
-    gap: 30px !important;
+  display: grid !important;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)) !important;
+  gap: 30px !important;
 }
-
 .woocommerce div.product section.related.products ul.products li.product {
-    width: 100% !important;
-    margin: 0 !important;
-    background: var(--rd-panel-bg);
-    border: 1px solid var(--rd-outline);
-    padding: 20px;
-    text-align: center;
-    transition: all 0.3s ease;
+  width: 100% !important;
+  margin: 0 !important;
+  background: var(--rd-panel-bg);
+  border: 1px solid var(--rd-outline);
+  padding: 20px;
+  text-align: center;
+  transition: all 0.3s ease;
 }
-
-.woocommerce div.product section.related.products ul.products li.product:hover {
-    border-color: var(--rd-teal);
-    transform: translateY(-5px);
-}
-
-/* Style the text inside related products */
+.woocommerce div.product section.related.products ul.products li.product:hover { border-color: var(--rd-teal); transform: translateY(-5px); }
 .woocommerce div.product section.related.products li.product h2 {
-    font-size: 14px !important;
-    color: #fff !important;
-    border: none !important;
-    margin: 20px 0 10px !important;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+  font-size: 14px !important;
+  color: #fff !important;
+  border: none !important;
+  margin: 20px 0 10px !important;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
-
 .woocommerce div.product section.related.products li.product .price {
-    font-size: 18px !important;
-    color: var(--rd-teal) !important;
-    border: none !important;
-    padding: 0 !important;
-    margin-bottom: 20px !important;
+  font-size: 18px !important;
+  color: var(--rd-teal) !important;
+  border: none !important;
+  padding: 0 !important;
+  margin-bottom: 20px !important;
 }
-
-/* Clean up the related product Add to Cart button */
 .woocommerce div.product section.related.products li.product .button {
-    background: transparent !important;
-    color: var(--rd-teal) !important;
-    border: 1px solid var(--rd-teal) !important;
-    padding: 15px 20px !important;
-    font-family: 'Space Grotesk', sans-serif !important;
-    font-size: 10px !important;
-    letter-spacing: 2px !important;
-    display: block;
-    width: 100%;
+  background: transparent !important;
+  color: var(--rd-teal) !important;
+  border: 1px solid var(--rd-teal) !important;
+  padding: 15px 20px !important;
+  font-family: 'Space Grotesk', sans-serif !important;
+  font-size: 10px !important;
+  letter-spacing: 2px !important;
+  display: block;
+  width: 100%;
 }
+.woocommerce div.product section.related.products li.product .button:hover { background: var(--rd-teal) !important; color: #000 !important; }
 
-.woocommerce div.product section.related.products li.product .button:hover {
-    background: var(--rd-teal) !important;
-    color: #000 !important;
-}
-
-/* =========================================================
-   REVIEWS & FORMS UI BLACKOUT
-   ========================================================= */
+/* REVIEWS */
 #review_form_wrapper .comment-form-comment textarea,
 #review_form_wrapper .comment-form-author input,
 #review_form_wrapper .comment-form-email input {
-    background-color: var(--rd-panel-bright) !important;
-    border: 1px solid var(--rd-outline) !important;
-    color: #fff !important;
-    padding: 15px !important;
-    font-family: 'Inter', sans-serif !important;
-    width: 100%;
-    border-radius: 0 !important;
-    transition: all 0.3s ease;
+  background-color: var(--rd-panel-bright) !important;
+  border: 1px solid var(--rd-outline) !important;
+  color: #fff !important;
+  padding: 15px !important;
+  font-family: 'Inter', sans-serif !important;
+  width: 100%;
+  border-radius: 0 !important;
+  transition: all 0.3s ease;
 }
-
 #review_form_wrapper .comment-form-comment textarea:focus,
 #review_form_wrapper .comment-form-author input:focus,
-#review_form_wrapper .comment-form-email input:focus {
-    border-color: var(--rd-teal) !important;
-    outline: none !important;
-    box-shadow: 0 0 10px rgba(118, 214, 213, 0.1);
-}
-
+#review_form_wrapper .comment-form-email input:focus { border-color: var(--rd-teal) !important; outline: none !important; box-shadow: 0 0 10px rgba(118,214,213,0.1); }
 #review_form_wrapper .form-submit .submit {
-    background: var(--rd-teal) !important;
-    color: #000 !important;
-    border: none !important;
-    padding: 15px 30px !important;
-    font-family: 'Space Grotesk', sans-serif !important;
-    text-transform: uppercase;
-    font-weight: 800;
-    letter-spacing: 2px;
-    border-radius: 0 !important;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    margin-top: 10px;
+  background: var(--rd-teal) !important;
+  color: #000 !important;
+  border: none !important;
+  padding: 15px 30px !important;
+  font-family: 'Space Grotesk', sans-serif !important;
+  text-transform: uppercase;
+  font-weight: 800;
+  letter-spacing: 2px;
+  border-radius: 0 !important;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 10px;
+}
+#review_form_wrapper .form-submit .submit:hover { background: #fff !important; box-shadow: 0 0 15px rgba(118,214,213,0.4) !important; }
+
+/* NOTIFICATIONS */
+.woocommerce-message, .woocommerce-error, .woocommerce-info {
+  background-color: var(--rd-panel-bg) !important;
+  color: #fff !important;
+  border-top: 2px solid var(--rd-teal) !important;
+  border-left: 1px solid var(--rd-outline) !important;
+  border-right: 1px solid var(--rd-outline) !important;
+  border-bottom: 1px solid var(--rd-outline) !important;
+  font-family: 'Inter', sans-serif !important;
+  padding: 20px 30px !important;
+  border-radius: 0 !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 30px !important;
+}
+.woocommerce-error { border-top-color: #ff4d4d !important; }
+.woocommerce-message::before, .woocommerce-error::before, .woocommerce-info::before { display: none !important; }
+.woocommerce-message .button, .woocommerce-error .button, .woocommerce-info .button {
+  background: transparent !important;
+  border: 1px solid var(--rd-teal) !important;
+  color: var(--rd-teal) !important;
+  padding: 10px 20px !important;
+  font-family: 'Space Grotesk', sans-serif !important;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 11px !important;
+  letter-spacing: 1px;
+  border-radius: 0 !important;
+  margin-left: 20px;
+}
+.woocommerce-message .button:hover { background: var(--rd-teal) !important; color: #000 !important; }
+
+/* ==========================================================================
+   LIGHT THEME â€” FULL SYSTEM
+   ========================================================================== */
+
+/*
+ * THE ROOT FIX:
+ * Pseudo-elements (::before/::after) inherit CSS variables from :root, NOT from body.
+ * So body[data-theme="light"] variable overrides don't reach the glitch engine.
+ * :root:has(body[data-theme="light"]) forces variable updates to the top level.
+ */
+:root:has(body[data-theme="light"]) {
+  --rd-teal: #0eb3b0;
+  --rd-outline: #d1d9e0;
+  --rd-bg: #f4f7f9;
+  --rd-panel-bg: #ffffff;
+  --rd-panel-bright: #f8fafc;
 }
 
-#review_form_wrapper .form-submit .submit:hover {
-    background: #fff !important;
-    box-shadow: 0 0 15px rgba(118, 214, 213, 0.4) !important;
-}
-
-/* =========================================================
-   SYSTEM NOTIFICATIONS (ALERTS & MESSAGES)
-   ========================================================= */
-.woocommerce-message, 
-.woocommerce-error, 
-.woocommerce-info {
-    background-color: var(--rd-panel-bg) !important;
-    color: #fff !important;
-    border-top: 2px solid var(--rd-teal) !important; /* Cyan accent line */
-    border-left: 1px solid var(--rd-outline) !important;
-    border-right: 1px solid var(--rd-outline) !important;
-    border-bottom: 1px solid var(--rd-outline) !important;
-    font-family: 'Inter', sans-serif !important;
-    padding: 20px 30px !important;
-    border-radius: 0 !important;
-    display: flex !important;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 30px !important;
-}
-
-.woocommerce-error {
-    border-top-color: #ff4d4d !important; /* Red for errors */
-}
-
-/* Hide default woo icons */
-.woocommerce-message::before, 
-.woocommerce-error::before, 
-.woocommerce-info::before {
-    display: none !important; 
-}
-
-/* The "View Cart" button inside the alert */
-.woocommerce-message .button, 
-.woocommerce-error .button, 
-.woocommerce-info .button {
-    background: transparent !important;
-    border: 1px solid var(--rd-teal) !important;
-    color: var(--rd-teal) !important;
-    padding: 10px 20px !important;
-    font-family: 'Space Grotesk', sans-serif !important;
-    text-transform: uppercase;
-    font-weight: 700;
-    font-size: 11px !important;
-    letter-spacing: 1px;
-    border-radius: 0 !important;
-    margin-left: 20px;
-}
-
-.woocommerce-message .button:hover {
-    background: var(--rd-teal) !important;
-    color: #000 !important;
-}
-
-/* =========================================================
-   CUSTOM QUANTITY +/- UI & VARIATION CLEANUP
-   ========================================================= */
-
-/* 1. Clean up the Variation Table (Size Label) & Alignment */
-.woocommerce div.product form.cart table.variations {
-    display: block !important;
-    border: none !important;
-    margin-bottom: 25px !important;
-}
-
-.woocommerce div.product form.cart table.variations tbody {
-    display: block !important;
-}
-
-/* Force the row into a perfectly centered flex line */
-.woocommerce div.product form.cart table.variations tr {
-    display: flex !important;
-    align-items: center !important; /* Centers Size perfectly with Dropdown */
-    justify-content: flex-start !important;
-    gap: 20px !important; /* Exactly 20px space between Size and the box */
-    background: transparent !important; /* Kills the dark grey row box */
-    border: none !important;
-    padding: 0 !important;
-}
-
-/* Nuke all padding and backgrounds on the cells */
-.woocommerce div.product form.cart table.variations td.label,
-.woocommerce div.product form.cart table.variations td.value {
-    display: block !important;
-    background: transparent !important;
-    background-color: transparent !important;
-    padding: 0 !important;
-    border: none !important;
-}
-
-.woocommerce div.product form.cart table.variations td.label {
-    width: auto !important;
-    line-height: 1 !important;
-}
-
-.woocommerce div.product form.cart table.variations td.label label {
-    color: #888 !important;
-    font-family: 'Space Grotesk', sans-serif !important;
-    text-transform: uppercase !important;
-    font-size: 14px !important;
-    letter-spacing: 2px !important;
-    font-weight: 700 !important;
-    margin: 0 !important;
-}
-
-.woocommerce div.product form.cart table.variations td.value {
-    flex-grow: 1 !important;
-    width: 100% !important;
-}
-
-/* Ensure the dropdown height matches the Equip Gear button */
-.woocommerce div.product form.cart table.variations select {
-    height: 60px !important;
-    margin: 0 !important;
-}
-
-.woocommerce div.product form.cart table.variations td.value {
-    background: transparent !important;
-}
-
-/* 2. Hide default browser up/down arrows in the number field */
-.woocommerce div.product form.cart div.quantity input.qty {
-    text-align: center !important;
-    -moz-appearance: textfield !important; /* Firefox */
-    border: none !important; /* Move border to wrapper */
-    width: 60px !important;
-    background: transparent !important;
-}
-.woocommerce div.product form.cart div.quantity input.qty::-webkit-outer-spin-button,
-.woocommerce div.product form.cart div.quantity input.qty::-webkit-inner-spin-button {
-    -webkit-appearance: none !important;
-    margin: 0;
-}
-
-/* 3. The Custom +/- Wrapper (Injected by JS) */
-.rd-qty-wrap {
-    display: flex !important;
-    align-items: center;
-    background-color: var(--rd-panel-bright) !important;
-    border: 1px solid var(--rd-outline) !important;
-    height: 60px;
-    margin-right: 15px;
-}
-
-.rd-qty-btn {
-    background: transparent !important;
-    color: var(--rd-teal) !important;
-    border: none !important;
-    width: 45px !important;
-    height: 100% !important;
-    font-size: 24px !important;
-    cursor: pointer;
-    transition: 0.2s ease;
-    font-family: 'Space Grotesk', sans-serif !important;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0 !important;
-}
-
-.rd-qty-btn:hover {
-    background: var(--rd-teal) !important;
-    color: #000 !important;
-}
-
-/* Ensure Equip Gear button aligns properly */
-.woocommerce div.product form.cart .woocommerce-variation-add-to-cart {
-    display: flex !important;
-    align-items: center;
-}
-
-/* =========================================================
-   LIGHT THEME OVERRIDES
-   ========================================================= */
-
-/* 1. Swap the Core Variables */
 body[data-theme="light"] {
-    --rd-teal: #0eb3b0; /* Deeper cyan for better contrast on white */
-    --rd-outline: #d1d9e0; /* Light grey borders */
-    --rd-bg: #f4f7f9; /* Soft off-white background */
-    --rd-panel-bg: #ffffff; /* Pure white panels */
-    --rd-panel-bright: #f8fafc;
-    
-    color: #121416 !important;
-    background-image: radial-gradient(#d1d9e0 1px, transparent 0); /* Lighter grid pattern */
+  --rd-teal: #0eb3b0;
+  --rd-outline: #d1d9e0;
+  --rd-bg: #f4f7f9;
+  --rd-panel-bg: #ffffff;
+  --rd-panel-bright: #f8fafc;
+  background-color: #f4f7f9 !important;
+  background-image: radial-gradient(#d1d9e0 1px, transparent 0) !important;
+  color: #121416 !important;
 }
 
-/* 2. Invert Text and Headings */
+/* HEADINGS */
 body[data-theme="light"] h1,
 body[data-theme="light"] h2,
 body[data-theme="light"] h3,
 body[data-theme="light"] .product_title,
+body[data-theme="light"] .rd-hero-title,
 body[data-theme="light"] .woocommerce div.product p.price,
-body[data-theme="light"] .woocommerce div.product span.price {
-    color: #121416 !important;
-}
+body[data-theme="light"] .woocommerce div.product span.price { color: #121416 !important; }
 
+/* BODY TEXT */
 body[data-theme="light"] p,
 body[data-theme="light"] label,
+body[data-theme="light"] span,
+body[data-theme="light"] li,
 body[data-theme="light"] .woocommerce-product-details__short-description,
-body[data-theme="light"] .rd-simple-text {
-    color: #4a5568 !important;
-}
+body[data-theme="light"] .rd-simple-text { color: #4a5568 !important; }
 
-/* 3. Invert Inputs and Textareas */
+/* INPUTS */
 body[data-theme="light"] input[type="text"],
 body[data-theme="light"] input[type="email"],
 body[data-theme="light"] input[type="number"],
 body[data-theme="light"] textarea,
-body[data-theme="light"] select {
-    background-color: #ffffff !important;
-    color: #121416 !important;
-    border-color: #d1d9e0 !important;
-}
+body[data-theme="light"] select { background-color: #fff !important; color: #121416 !important; border-color: #d1d9e0 !important; }
 
-/* 4. Invert Buttons */
+/* BUTTONS */
 body[data-theme="light"] .rd-btn,
 body[data-theme="light"] .button,
-body[data-theme="light"] #place_order {
-    color: #ffffff !important;
-}
-
+body[data-theme="light"] #place_order { color: #fff !important; }
 body[data-theme="light"] .rd-btn:hover,
 body[data-theme="light"] .button:hover,
-body[data-theme="light"] .rd-qty-btn:hover {
-    color: #ffffff !important;
-    background-color: #121416 !important; /* Buttons turn black on hover in light mode */
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1) !important;
-}
+body[data-theme="light"] .rd-qty-btn:hover { color: #fff !important; background-color: #121416 !important; box-shadow: 0 0 15px rgba(0,0,0,0.1) !important; }
 
-/* =========================================================
-   THE FLOATING TOGGLE SWITCH UI
-   ========================================================= */
-.rd-theme-toggle {
-    position: fixed;
-    bottom: 30px;
-    right: 30px; /* Sits in the bottom right corner of the screen */
-    width: 55px;
-    height: 55px;
-    background: var(--rd-panel-bg);
-    border: 2px solid var(--rd-teal);
-    z-index: 9999;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 24px;
-    border-radius: 0; /* Keeping the CNC aesthetic */
-    transition: all 0.3s ease;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-}
+/* PANELS */
+body[data-theme="light"] .rd-panel,
+body[data-theme="light"] .woocommerce-MyAccount-content,
+body[data-theme="light"] .woocommerce-MyAccount-navigation ul { background-color: #ffffff !important; }
 
-.rd-theme-toggle:hover {
-    background: var(--rd-teal);
-    transform: translateY(-5px);
-}
-
-/* =========================================================
-   LIGHT MODE: ELEMENTOR & DASHBOARD NUKE
-   ========================================================= */
-
-/* 1. Strip ALL Elementor Hardcoded Backgrounds (Attribute-Level Override) */
+/* ELEMENTOR â€” STRIP ALL INLINE BACKGROUNDS */
+body[data-theme="light"] .elementor-section,
+body[data-theme="light"] .elementor-column,
+body[data-theme="light"] .elementor-widget-wrap,
+body[data-theme="light"] .elementor-widget-container,
+body[data-theme="light"] .elementor-background-overlay,
 body[data-theme="light"] .elementor-location-archive,
 body[data-theme="light"] section[data-element_type="section"],
 body[data-theme="light"] div[data-element_type="column"],
 body[data-theme="light"] div[data-element_type="widget"],
-body[data-theme="light"] .elementor-background-overlay,
-body[data-theme="light"] .elementor-widget-wrap {
-    background-color: transparent !important;
-    background-image: none !important;
-    background: transparent !important;
-}
+body[data-theme="light"] .e-con,
+body[data-theme="light"] .e-con-inner,
+body[data-theme="light"] .e-child { background-color: transparent !important; background-image: none !important; background: transparent !important; }
 
-/* 2. Force Elementor Headings to be Dark & Readable */
+/* ELEMENTOR HEADINGS */
 body[data-theme="light"] .elementor-heading-title,
 body[data-theme="light"] h1.elementor-heading-title,
 body[data-theme="light"] h2.elementor-heading-title,
 body[data-theme="light"] h3.elementor-heading-title,
-body[data-theme="light"] .elementor-widget-heading .elementor-heading-title {
-    color: #121416 !important;
-    text-shadow: none !important;
-    -webkit-text-stroke: 0px transparent !important; 
-}
+body[data-theme="light"] .elementor-widget-heading .elementor-heading-title { color: #121416 !important; text-shadow: none !important; -webkit-text-stroke: 0px transparent !important; }
 
-/* 3. Fix the "My Account" Rider Dashboard */
+/* ELEMENTOR TEXT */
+body[data-theme="light"] .elementor-text-editor,
+body[data-theme="light"] .elementor-icon-box-description { color: #4a5568 !important; }
+
+/* GLITCH ENGINE â€” :root:has() above ensures --rd-bg is now #f4f7f9 for pseudo-elements */
+body[data-theme="light"] .rd-glitch { color: #121416 !important; }
+body[data-theme="light"] .rd-glitch::before,
+body[data-theme="light"] .rd-glitch::after { background: var(--rd-bg); }
+body[data-theme="light"] .rd-glitch::before { text-shadow: -2px 0 var(--rd-teal); }
+body[data-theme="light"] .rd-glitch::after { text-shadow: -2px 0 #121416; }
+
+/* DASHBOARD */
 body[data-theme="light"] .woocommerce-MyAccount-content,
-body[data-theme="light"] .woocommerce-MyAccount-navigation ul {
-    background-color: #ffffff !important;
-    border-color: #d1d9e0 !important;
-    color: #121416 !important;
-}
-
-body[data-theme="light"] .woocommerce-MyAccount-navigation-link a {
-    color: #4a5568 !important;
-    border-color: #d1d9e0 !important;
-}
-
-body[data-theme="light"] .woocommerce-MyAccount-navigation-link a:hover {
-    background-color: #f8fafc !important;
-    color: #121416 !important;
-}
-
-body[data-theme="light"] .woocommerce-MyAccount-navigation-link.is-active a {
-    color: var(--rd-teal) !important;
-    background-color: rgba(14, 179, 176, 0.05) !important;
-    border-left-color: var(--rd-teal) !important;
-}
-
-/* Ensure Dashboard form text is readable */
+body[data-theme="light"] .woocommerce-MyAccount-navigation ul { background-color: #fff !important; border-color: #d1d9e0 !important; color: #121416 !important; }
+body[data-theme="light"] .woocommerce-MyAccount-navigation-link a { color: #4a5568 !important; border-color: #d1d9e0 !important; }
+body[data-theme="light"] .woocommerce-MyAccount-navigation-link a:hover { background-color: #f8fafc !important; color: #121416 !important; }
+body[data-theme="light"] .woocommerce-MyAccount-navigation-link.is-active a { color: var(--rd-teal) !important; background-color: rgba(14,179,176,0.05) !important; border-left-color: var(--rd-teal) !important; }
 body[data-theme="light"] .woocommerce-MyAccount-content p,
 body[data-theme="light"] .woocommerce-MyAccount-content label,
-body[data-theme="light"] .woocommerce-MyAccount-content legend {
-    color: #4a5568 !important;
-}
+body[data-theme="light"] .woocommerce-MyAccount-content legend { color: #4a5568 !important; }
 
-/* 4. Fix Base of Operations Footer Text */
-body[data-theme="light"] .elementor-text-editor,
-body[data-theme="light"] .elementor-icon-box-description {
-    color: #4a5568 !important;
-}
-
-/* 5. Fix Quantity Input Text */
+/* QUANTITY INPUT */
 body[data-theme="light"] .woocommerce div.product form.cart div.quantity input.qty,
-body[data-theme="light"] .rd-qty-wrap input.qty {
-    color: #121416 !important;
-}
+body[data-theme="light"] .rd-qty-wrap input.qty { color: #121416 !important; }
 
-/* 6. Fix the Injected Product Title Colors */
-.product_title { color: #fff !important; }
+/* PRODUCT TITLE */
 body[data-theme="light"] .product_title { color: #121416 !important; }
+
+/* THEME TOGGLE */
+.rd-theme-toggle {
+  position: fixed;
+  bottom: 30px; right: 30px;
+  width: 55px; height: 55px;
+  background: var(--rd-panel-bg);
+  border: 2px solid var(--rd-teal);
+  z-index: 9999;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+.rd-theme-toggle:hover { background: var(--rd-teal); transform: translateY(-5px); }
+
+/* HERO & SUB-BRAND */
+.rd-hero-container { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; }
+.rd-sub-brand {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  letter-spacing: 0.4em;
+  color: var(--rd-text-muted, #666);
+  text-transform: uppercase;
+  margin-top: -10px;
+}
